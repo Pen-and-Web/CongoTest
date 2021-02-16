@@ -3,6 +3,7 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 const mongoose = require("mongoose");
 const app = express();
+const cors = require("cors");
 require("dotenv").config({ path: "./config.env" });
 require("./models/db");
 
@@ -11,6 +12,8 @@ const auth = require("./routes/auth");
 const passport = require("./passport/setup");
 
 app.use(express.json());
+
+app.use(cors());
 
 // Express Session
 app.use(
