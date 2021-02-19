@@ -2,6 +2,7 @@ const express = require("express");
 const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 const mongoose = require("mongoose");
+const cookieParser = require("cookie-parser");
 const app = express();
 const cors = require("cors");
 require("dotenv").config({ path: "./config.env" });
@@ -12,7 +13,7 @@ const auth = require("./routes/auth");
 const passport = require("./passport/setup");
 
 app.use(express.json());
-
+app.use(cookieParser());
 app.use(cors());
 
 // Express Session
@@ -29,6 +30,13 @@ app.use(
 // Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.all("*", (req, res, next) => {
+  var origin = req.protocol + "://" + req.get("host") + req.originalUrl;
+  console.log(origin);
+  console.log("cookies", JSON.parse(JSON.stringify(req.cookies)));
+  next();
+});
 
 app.use("/api/auth", auth);
 app.use("/api/users", userRouter);
