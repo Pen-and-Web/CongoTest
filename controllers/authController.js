@@ -14,20 +14,20 @@ const login = (req, res) => {
 
 //
 const facebookLogin = async function (req, res) {
-  const { email, first_name: firstName, last_name: lastName } = req.user._json;
+  const { email, firstName, lastName } = req.user;
   const authProvider = req.user.provider;
 
   try {
     let user = await User.findOne({ email });
     if (!user) {
-      let newUser = new User({
+      user = new User({
         firstName,
         lastName,
         email,
         authProvider,
       });
 
-      await newUser.save({ validateBeforeSave: false });
+      const newUser = await user.save({ validateBeforeSave: false });
     }
   } catch (ex) {
     console.log(ex);
@@ -35,14 +35,14 @@ const facebookLogin = async function (req, res) {
   }
 
   //  Send users info to client
-  return res.status(200).json({ user: { firstName, lastName, email } });
+  res.writeHead(301, {
+    Location: `${process.env.CLIENT_URL}/`,
+  });
+  return res.end();
+  // return res.status(200).json({ user: { firstName, lastName, email } });
 };
 const googleLogin = async function (req, res) {
-  const {
-    email,
-    given_name: firstName,
-    family_name: lastName,
-  } = req.user._json;
+  const { email, firstName, lastName } = req.user;
   const authProvider = req.user.provider;
   try {
     let user = await User.findOne({ email });
@@ -62,7 +62,11 @@ const googleLogin = async function (req, res) {
   }
 
   //  Send users info to client
-  return res.status(200).json({ user: { firstName, lastName, email } });
+  res.writeHead(301, {
+    Location: `${process.env.CLIENT_URL}/`,
+  });
+  return res.end();
+  // return res.status(200).json({ user: { firstName, lastName, email } });
 };
 
 const signup = async (req, res) => {
