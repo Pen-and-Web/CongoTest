@@ -31,6 +31,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Logs cookie info and requested URL
 app.all("*", (req, res, next) => {
   var origin = req.protocol + "://" + req.get("host") + req.originalUrl;
   console.log(origin);
@@ -41,6 +42,6 @@ app.all("*", (req, res, next) => {
 app.use("/api/auth", auth);
 app.use("/api/users", userRouter);
 
-app.listen(3100, () => {
-  console.log("listening on port 3100");
+app.listen(process.env.PORT, () => {
+  console.log(`listening on port ${process.env.PORT}`);
 });

@@ -1,34 +1,27 @@
-const User = require("../models/userModel.js");
 const passport = require("passport");
+const User = require("../models/userModel.js");
 const LocalStrategy = require("passport-local").Strategy;
 const FacebookStrategy = require("passport-facebook").Strategy;
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 
 passport.serializeUser(function (user, done) {
-  done(null, user);
-  // fine till here
+  if (user.provider) return done(null, user);
+  done(null, user._id);
 });
 
-passport.deserializeUser(function (user, done) {
-  done(null, user);
+passport.deserializeUser(async function (user, done) {
+  if (user.provider) return done(null, user);
+  try {
+    // The user variable here contains users id
+    let userFound = await User.findById(user, "firstName email lastName");
+    if (!userFound) return done(new Error("User not found"));
+
+    return done(null, userFound);
+  } catch (error) {
+    console.error(error);
+    done(error);
+  }
 });
-
-// passport.serializeUser((user, done) => {
-//   done(null, user._id);
-// });
-
-// passport.deserializeUser(async (id, done) => {
-//   try {
-//     let user = await User.findById(id, "firstName email lastName");
-
-//     if (!user) return done(new Error("user not found"));
-
-//     return done(null, user);
-//   } catch (error) {
-//     console.error(error, "error was fired from here");
-//     done(error);
-//   }
-// });
 
 // Local Strategy
 passport.use(
@@ -37,11 +30,9 @@ passport.use(
     async (email, password, done) => {
       try {
         const user = await User.findOne({ email });
-
         if (!user) return done(null, false);
 
         const passwordMatch = await user.comparePassword(password);
-
         if (!passwordMatch) return done(null, false);
 
         return done(null, user);
@@ -58,7 +49,8 @@ passport.use(
     {
       clientID: process.env.FACEBOOK_CLIENT_ID,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-      callbackURL: "http://localhost:3100/api/auth/facebook/callback",
+
+      callbackURL: `${process.env.HOST}/api/auth/facebook/callback`,
       profileFields: [
         "email",
         "name",
@@ -81,10 +73,9 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:3100/api/auth/google/callback",
+      callbackURL: `${process.env.HOST}/api/auth/google/callback`,
     },
     (accessToken, refreshToken, profile, done) => {
-      console.log("here on line 86");
       done(null, profile);
     }
   )

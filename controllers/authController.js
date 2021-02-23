@@ -17,15 +17,45 @@ const facebookLogin = async function (req, res) {
   const { email, first_name: firstName, last_name: lastName } = req.user._json;
   const authProvider = req.user.provider;
 
-  let newUser = new User({
-    firstName,
-    lastName,
-    email,
-    authProvider,
-  });
-
   try {
-    await newUser.save({ validateBeforeSave: false });
+    let user = await User.findOne({ email });
+    if (!user) {
+      let newUser = new User({
+        firstName,
+        lastName,
+        email,
+        authProvider,
+      });
+
+      await newUser.save({ validateBeforeSave: false });
+    }
+  } catch (ex) {
+    console.log(ex);
+    console.log(ex.response);
+  }
+
+  //  Send users info to client
+  return res.status(200).json({ user: { firstName, lastName, email } });
+};
+const googleLogin = async function (req, res) {
+  const {
+    email,
+    given_name: firstName,
+    family_name: lastName,
+  } = req.user._json;
+  const authProvider = req.user.provider;
+  try {
+    let user = await User.findOne({ email });
+    if (!user) {
+      let newUser = new User({
+        firstName,
+        lastName,
+        email,
+        authProvider,
+      });
+
+      await newUser.save({ validateBeforeSave: false });
+    }
   } catch (ex) {
     console.log(ex);
     console.log(ex.response);
@@ -158,6 +188,6 @@ module.exports = {
   forgotPassword,
   resetPasswordAfterForget,
   updateMe,
-
+  googleLogin,
   facebookLogin,
 };

@@ -5,6 +5,7 @@ const { check, validationResult } = require("express-validator");
 const {
   login,
   facebookLogin,
+  googleLogin,
   logout,
   signup,
   me,
@@ -25,10 +26,7 @@ router.get(
 router.get(
   "/google/callback",
   passport.authenticate("google", { failureRedirect: "/login" }),
-  function (req, res) {
-    // Successful authentication, redirect home.
-    res.send("you reached the redirect URI");
-  }
+  googleLogin
 );
 
 router.get("/facebook", passport.authenticate("facebook"));
