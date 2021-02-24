@@ -233,14 +233,14 @@ export default function Login({ onLogin }) {
             <p style={{ fontSize: "0.8rem" }}>Login with social media</p>
 
             <a
-              href="http://localhost:3100/api/auth/facebook"
+              href="https://surveyapp786.herokuapp.com/api/auth/facebook"
               style={{ marginTop: "1rem" }}
             >
               <FaFacebook className={classes.facebookIcon} />
             </a>
 
             <a
-              href="http://localhost:3100/api/auth/google"
+              href="https://surveyapp786.herokuapp.com/api/auth/google"
               style={{ marginTop: "1rem" }}
             >
               <FcGoogle className={classes.googleIcon} />

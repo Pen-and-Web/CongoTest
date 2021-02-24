@@ -23,7 +23,7 @@ app.use(
     secret: "superSecretkey",
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false },
+    cookie: { secure: true },
     store: new MongoStore({ mongooseConnection: mongoose.connection }),
   })
 );
