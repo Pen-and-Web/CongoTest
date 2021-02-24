@@ -10,14 +10,10 @@ passport.serializeUser(function (user, done) {
 });
 
 passport.deserializeUser(async function (user, done) {
-  if (user.provider === "google") {
-    const { email, given_name: firstName, family_name: lastName } = user._json;
-    return done(null, { firstName, lastName, email });
+  if (user.provider) {
+    return done(null, user);
   }
-  if (user.provider === "facebook") {
-    const { email, first_name: firstName, last_name: lastName } = user._json;
-    return done(null, { firstName, lastName, email });
-  }
+
   try {
     // The user variable here contains users id
     let userFound = await User.findById(user, "firstName email lastName");

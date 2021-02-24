@@ -4,19 +4,19 @@ let DB;
 if (process.env.NODE_ENV === "production") {
   DB = process.env.DATABASE;
 } else {
-  DB = process.env.DATABASE;
+  DB = process.env.DATABASE_DEV;
 }
 
 mongoose
-  .connect(process.env.DATABASE, {
+  .connect(DB, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
     useFindAndModify: false,
   })
   .then(() => {
-    console.log("DB connection Successful");
+    console.log(`DB connection Successful ${DB}`);
   })
-  .catch(() => {
+  .catch((ex) => {
     console.log("Problem connecting to mongodb...");
   });

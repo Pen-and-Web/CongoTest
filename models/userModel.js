@@ -47,8 +47,6 @@ UserSchema.pre("save", async function (next) {
   const user = this;
 
   try {
-    if (user.authProvider) return next();
-
     if (!user.isModified("password")) return next();
 
     let hash = await bcrypt.hash(user.password, 13);

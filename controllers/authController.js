@@ -9,49 +9,58 @@ const login = (req, res) => {
       lastName: req.user.lastName,
     },
   });
-  // return res.status(200).json({ msg: "user sucessfully logged in" });
 };
 
 //
 const facebookLogin = async function (req, res) {
-  const { email, firstName, lastName } = req.user;
+  const { email, first_name: firstName, last_name: lastName } = req.user._json;
   const authProvider = req.user.provider;
 
   try {
     let user = await User.findOne({ email });
+
     if (!user) {
+      const password = "user@123";
       user = new User({
         firstName,
         lastName,
         email,
         authProvider,
+        password,
+        passwordConfirm: password,
       });
 
-      const newUser = await user.save({ validateBeforeSave: false });
+      const newUser = await user.save();
     }
   } catch (ex) {
     console.log(ex);
     console.log(ex.response);
   }
 
-  //  Send users info to client
+  //  Send users to home page
   res.writeHead(301, {
     Location: `${process.env.CLIENT_URL}/`,
   });
   return res.end();
-  // return res.status(200).json({ user: { firstName, lastName, email } });
 };
 const googleLogin = async function (req, res) {
-  const { email, firstName, lastName } = req.user;
+  const {
+    email,
+    given_name: firstName,
+    family_name: lastName,
+  } = req.user._json;
   const authProvider = req.user.provider;
   try {
     let user = await User.findOne({ email });
     if (!user) {
+      const password = "user@123";
       let newUser = new User({
         firstName,
         lastName,
         email,
         authProvider,
+        password,
+        passwordConfirm: password,
       });
 
       await newUser.save({ validateBeforeSave: false });
@@ -81,9 +90,14 @@ const signup = async (req, res) => {
         email,
         password,
       });
-      await newUser.save();
+      newUser = await newUser.save();
+      req.login(newUser, function (err) {
+        if (err) {
+          return res.status(500).json({ errors: ["something went wrong"] });
+        }
 
-      return res.status(200).json({ msg: "user successfully created" });
+        return res.status(200).json({ msg: "user successfully created" });
+      });
     }
     return res
       .status(422)
@@ -96,8 +110,10 @@ const signup = async (req, res) => {
 };
 
 const logout = (req, res) => {
-  req.logout();
-  res.status(200).json({ msg: "logged out" });
+  res.clearCookie("connect.sid");
+  req.session.destroy(function (err) {
+    res.status(200).json({ msg: "logged out" });
+  });
 };
 
 const me = async (req, res) => {
@@ -137,10 +153,12 @@ const forgotPassword = async (req, res) => {
 };
 
 const updateMe = async (req, res) => {
+  console.log(req.user);
+
   if (!req.user)
     return res.status(403).json({ errors: ["Please login update info"] });
 
-  const { firstName, lastName, password, passwordConfirm, email } = req.body;
+  const { firstName, lastName, password, email } = req.body;
 
   const user = await User.findOne({
     email,
@@ -152,17 +170,36 @@ const updateMe = async (req, res) => {
       .json({ message: "User with provided email does not exist." });
   }
 
+  user.email = email;
   user.firstName = firstName;
   user.lastName = lastName;
   user.password = password;
-  user.passwordConfirm = passwordConfirm;
+  user.passwordConfirm = password;
 
-  await user.save();
-
-  res.status(200).json({ message: "Updated successfully" });
+  try {
+    const updatedUser = await user.save();
+    if (updatedUser) {
+      res.status(200).json({
+        message: "Updated successfully",
+        user: {
+          firstName: updatedUser.firstName,
+          lastName: updatedUser.lastName,
+          email: updatedUser.email,
+        },
+      });
+    }
+  } catch (ex) {
+    console.log(ex);
+    console.log(ex.response);
+  }
 };
 
 const resetPasswordAfterForget = async (req, res) => {
+  if (req.body.password !== req.body.passwordConfirm) {
+    return res
+      .status(400)
+      .json({ message: "Password and Confirm Password are not same." });
+  }
   const resetCode = req.body.resetCode;
 
   const user = await User.findOne({

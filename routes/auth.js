@@ -16,6 +16,7 @@ const {
 
 const router = express.Router();
 
+// /api/auth/google/
 router.get(
   "/google",
   passport.authenticate("google", {
@@ -23,6 +24,7 @@ router.get(
   })
 );
 
+// /api/auth/google/callback
 router.get(
   "/google/callback",
   passport.authenticate("google", { failureRedirect: process.env.CLIENT_URL }),
