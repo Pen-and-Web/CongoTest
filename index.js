@@ -3,6 +3,7 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
+const path = require("path");
 const app = express();
 const cors = require("cors");
 require("dotenv").config({ path: "./config.env" });
@@ -41,6 +42,11 @@ app.all("*", (req, res, next) => {
 
 app.use("/api/auth", auth);
 app.use("/api/users", userRouter);
+
+app.use(express.static("client/build"));
+app.all("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+});
 
 app.listen(process.env.PORT, () => {
   console.log(`listening on port ${process.env.PORT}`);
