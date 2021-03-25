@@ -12,7 +12,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Avatar from "@material-ui/core/Avatar";
 import Grid from "@material-ui/core/Grid";
 import FolderIcon from "@material-ui/icons/Folder";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
@@ -67,12 +67,14 @@ export default function Tests() {
   };
 
   function generate(element) {
+    console.log("Element", element);
     return [0, 1, 2].map((value) =>
       React.cloneElement(element, {
         key: value,
       })
     );
   }
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -104,7 +106,7 @@ export default function Tests() {
                       </Avatar>
                     </ListItemAvatar>
                     <ListItemText
-                      primary="Testing"
+                      primary={"Test"}
                       secondary={secondary ? "Secondary text" : null}
                     />
                   </ListItem>
@@ -129,17 +131,16 @@ export default function Tests() {
             <div className={classes.paper}>
               <h2 id="transition-modal-title">Instructions</h2>
               <p id="transition-modal-description">
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book
+                You will be presented with a bunch of 2 digit numbers and you
+                have to select the ones that add u to 10, for example no 82 -
+                {">"} 8 + 2 = 10
               </p>
               <div className={classes.root}>
-                <NavLink to="/test" className={classes.testLink}>
+                <Link to="/test" className={classes.testLink}>
                   <Button variant="outlined" color="primary">
                     Attempt
                   </Button>
-                </NavLink>
+                </Link>
               </div>
             </div>
           </Fade>

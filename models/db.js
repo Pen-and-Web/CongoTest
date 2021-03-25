@@ -18,5 +18,5 @@ mongoose
     console.log(`DB connection Successful ${DB}`);
   })
   .catch((ex) => {
-    console.log("Problem connecting to mongodb...");
+    console.log("Problem connecting to mongodb...", ex);
   });
