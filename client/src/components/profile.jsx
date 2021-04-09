@@ -24,7 +24,8 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     margin: "auto",
-    marginTop: "5%",
+    //paddingTop: "5%",
+    textAlign: "center",
   },
   form: {
     "& > *": {
@@ -145,92 +146,100 @@ export default function Profile({ onSignup }) {
   // Toggles password confirm visibility
 
   return (
-    <Card className={classes.card}>
-      <CardContent>
-        <Typography variant="h5" component="h2">
-          Profile
-        </Typography>
-        <form className={classes.form} noValidate autoComplete="off">
-          {/* First Name */}
-          <FormControl>
-            <InputLabel htmlFor="firstName">First Name</InputLabel>
-            <Input
-              id="firstName"
-              name="firstName"
-              error={!!values.errors.firstName}
-              value={values.data.firstName}
-              onChange={handleChange}
-              aria-describedby="component-error-text"
-            />
-            <FormHelperText
-              className={classes.errorText}
-              id="component-error-text"
-            >
-              {values.errors.firstName}
-            </FormHelperText>
-          </FormControl>
-          {/* Last Name */}
-          <FormControl>
-            <InputLabel htmlFor="lastName">Last Name</InputLabel>
-            <Input
-              id="lastName"
-              name="lastName"
-              error={!!values.errors.lastName}
-              value={values.data.lastName}
-              onChange={handleChange}
-              aria-describedby="component-error-text"
-            />
-            <FormHelperText
-              className={classes.errorText}
-              id="component-error-text"
-            >
-              {values.errors.lastName}
-            </FormHelperText>
-          </FormControl>
+    <div
+      style={{
+        background: "rgb(148, 228, 247)",
+        height: "100vh",
+        paddingTop: "5%",
+      }}
+    >
+      <Card className={classes.card}>
+        <CardContent>
+          <Typography variant="h5" component="h2">
+            Profile
+          </Typography>
+          <form className={classes.form} noValidate autoComplete="off">
+            {/* First Name */}
+            <FormControl>
+              <InputLabel htmlFor="firstName">First Name</InputLabel>
+              <Input
+                id="firstName"
+                name="firstName"
+                error={!!values.errors.firstName}
+                value={values.data.firstName}
+                onChange={handleChange}
+                aria-describedby="component-error-text"
+              />
+              <FormHelperText
+                className={classes.errorText}
+                id="component-error-text"
+              >
+                {values.errors.firstName}
+              </FormHelperText>
+            </FormControl>
+            {/* Last Name */}
+            <FormControl>
+              <InputLabel htmlFor="lastName">Last Name</InputLabel>
+              <Input
+                id="lastName"
+                name="lastName"
+                error={!!values.errors.lastName}
+                value={values.data.lastName}
+                onChange={handleChange}
+                aria-describedby="component-error-text"
+              />
+              <FormHelperText
+                className={classes.errorText}
+                id="component-error-text"
+              >
+                {values.errors.lastName}
+              </FormHelperText>
+            </FormControl>
 
-          {/* Password */}
-          <FormControl>
-            <InputLabel htmlFor="password">New Password</InputLabel>
-            <Input
-              id="password"
-              name="password"
-              error={!!values.errors.password}
-              type={values.showPassword ? "text" : "password"}
-              value={values.data.password}
-              onChange={handleChange}
-              aria-describedby="component-error-text"
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                  >
-                    {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                  </IconButton>
-                </InputAdornment>
-              }
-            />
-            <FormHelperText
-              className={classes.errorText}
-              id="component-error-text"
+            {/* Password */}
+            <FormControl>
+              <InputLabel htmlFor="password">New Password</InputLabel>
+              <Input
+                id="password"
+                name="password"
+                error={!!values.errors.password}
+                type={values.showPassword ? "text" : "password"}
+                value={values.data.password}
+                onChange={handleChange}
+                aria-describedby="component-error-text"
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                    >
+                      {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+              <FormHelperText
+                className={classes.errorText}
+                id="component-error-text"
+              >
+                {values.errors.password}
+              </FormHelperText>
+            </FormControl>
+            {/* Register Button */}
+            <Button
+              size="small"
+              className={classes.registerBtn}
+              variant="contained"
+              color="#F0F8FF"
+              onClick={(e) => {
+                handleSubmit(e);
+              }}
             >
-              {values.errors.password}
-            </FormHelperText>
-          </FormControl>
-          {/* Register Button */}
-          <Button
-            size="small"
-            className={classes.registerBtn}
-            variant="contained"
-            color="primary"
-            onClick={(e) => {
-              handleSubmit(e);
-            }}
-          >
-            Save Changes
-          </Button>
-        </form>
-      </CardContent>
-    </Card>
+              Save Changes
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
+    </div>
   );
 }

@@ -1,9 +1,11 @@
 const User = require("../models/userModel");
+
 const sendEmail = require("./../utils/email");
 
 const login = (req, res) => {
   return res.status(200).json({
     user: {
+      id: req.user["_id"],
       email: req.user.email,
       firstName: req.user.firstName,
       lastName: req.user.lastName,

@@ -28,8 +28,8 @@ export default function Navbar({ user, onLogout }) {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
+      <AppBar position="static" style={{ background: "#6CA6CD" }}>
+        <Toolbar color="#6CA6CD">
           <NavLink color="inherit" to="/" className={classes.title}>
             The Test
           </NavLink>

@@ -81,14 +81,14 @@ const useStyles = makeStyles((theme) => ({
   // },
 }));
 
-export default function ItemButton(props) {
+export default function Abutton(props) {
   const {
     addCorrect,
     addWrong,
     addClicked,
     checkSelectedValue,
     index,
-    number,
+    word,
     selectedValues,
   } = props;
 
@@ -97,16 +97,17 @@ export default function ItemButton(props) {
   return (
     <Button
       onClick={() => {
-        let array = checkSelectedValue(number, index);
+        let array = checkSelectedValue(word, index);
 
-        if (array.length < 16) {
+        if (array.length < 24) {
           setDisabled(!disabled);
         }
       }}
       variant={!disabled ? "outlined" : "contained"}
+      style={{ marginBottom: "2%", width: 20 }}
       color="primary"
     >
-      {props.number}
+      {props.word}
     </Button>
   );
 }

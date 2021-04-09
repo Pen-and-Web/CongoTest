@@ -1,7 +1,8 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
-export const apiUrl = "https://surveyapp786.herokuapp.com/api";
+// export const apiUrl = "https://surveyapp786.herokuapp.com/api";
+export const apiUrl = "http://localhost:3100/api";
 
 // http://68.183.135.125:3100/api/auth/signup
 
@@ -9,7 +10,7 @@ export const signup = async (dto) => {
   try {
     const res = await axios.post(`${apiUrl}/auth/signup`, dto);
     if (res.status === 200) {
-      toast.info("Signup successfull");
+      toast.info("Signup successful");
       return true;
     }
   } catch (ex) {
@@ -30,6 +31,7 @@ export const signup = async (dto) => {
 export const login = async (user) => {
   try {
     const res = await axios.post(`${apiUrl}/auth/login`, user);
+    console.log("Login Response: ", res);
 
     if (res.status === 200) {
       setUserLocalStorage(res.data.user);
@@ -115,6 +117,7 @@ export const logout = async () => {
 export const getCurrentUserApi = async () => {
   try {
     const res = await axios.get(`${apiUrl}/auth/me`);
+    console.log("Login Response: ", res);
     if (res.data.provider === "facebook") {
       var {
         email,
@@ -147,6 +150,7 @@ export const getUserLocalStorage = () => {
   return JSON.parse(localStorage.getItem("user"));
 };
 export const setUserLocalStorage = (user) => {
+  console.log("Localstorage: ", JSON.stringify(user));
   localStorage.setItem("user", JSON.stringify(user));
 };
 

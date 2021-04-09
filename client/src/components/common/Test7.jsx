@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
+import { useHistory } from "react-router-dom";
 import Box from "@material-ui/core/Box";
 import { NavLink } from "react-router-dom";
 import ItemButton from "./ItemButton";
@@ -66,64 +67,57 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Test2(props) {
-  // 19, 28, 37, 46, 55, 64, 73, 82, 91
-  const populateArr = (arr) => {
-    while (arr.length < 36) {
-      var r = Math.floor(Math.random() * 89) + 10;
-      if (arr.length < 20) {
-        if (!checkEqualToTen(r)) {
-          arr.push(r);
-        }
-      } else {
-        if (checkEqualToTen(r)) {
-          arr.push(r);
-        }
-      }
-    }
-    let arr1 = [];
-    arr1 = arr.sort(() => Math.random() - 0.5);
-    return arr1;
-  };
+export default function Test7(props) {
+  let history = useHistory();
+  //   const populateArr = (arr) => {
+  //     while (arr.length < 36) {
+  //       var r = Math.floor(Math.random() * 89) + 10;
+  //       if (arr.length < 20) {
+  //         if (!checkEqualToTen(r)) {
+  //           arr.push(r);
+  //         }
+  //       } else {
+  //         if (checkEqualToTen(r)) {
+  //           arr.push(r);
+  //         }
+  //       }
+  //     }
+  //     let arr1 = [];
+  //     arr1 = arr.sort(() => Math.random() - 0.5);
+  //     return arr1;
+  //   };
 
-  const [correct, setCorrect] = useState(0);
-  const [wrong, setWrong] = useState(0);
-  const [clicked, setClicked] = useState(0);
   const [seconds, setSeconds] = useState(30);
   const [minutes, setMinutes] = useState(0);
-  const [selectedValues, setSelectedValues] = useState([]);
   const [timerBg, setTimerBg] = useState("#3f51b5");
+  const [names, setNames] = useState([
+    { first: "Claire", second: "Sullivan" },
+    { first: "Jack", second: "Thompson" },
+    { first: "Leon", second: "Chapin" },
+    { first: "John", second: "Reynolds" },
+    { first: "Joan", second: "White" },
+    { first: "Donald", second: "Lambert" },
+    { first: "Daniel", second: " Shaw" },
+    { first: "Kenneth", second: "Murray" },
+    { first: "Edward", second: "Nichols" },
+    { first: "Jean", second: "Wolfe" },
+    { first: "Carl", second: "Brown" },
+    { first: "Blanche", second: "Clark" },
+    { first: "Roger", second: "Lannon" },
+    { first: "Eloise", second: "Cooper" },
+    { first: "David", second: "Burgess" },
+  ]);
 
-  const addCorrect = () => {
-    setCorrect(correct + 1);
+  const [seven, setSeven] = useState([]);
+  const populateNames = (arr) => {
+    arr.sort(() => Math.random() - 0.5);
+    arr.length = 7;
+    return arr;
   };
-  const addWrong = () => {
-    setWrong(wrong + 1);
-  };
-  const addClicked = () => {
-    setClicked(clicked + 1);
-  };
-  const checkSelectedValue = (data, index) => {
-    const obj = { id: index, value: data };
-    let push = true;
-    selectedValues.map((item) => {
-      if (item.id === index) {
-        push = false;
-      }
-    });
-    let newArray = selectedValues.filter((item) => item.id != index);
-    if (push) {
-      if (selectedValues.length < 16) {
-        selectedValues.push(obj);
-      } else {
-        alert("You have aleadry selected 16 numbers");
-      }
-    } else {
-      setSelectedValues(newArray);
-    }
-    console.log(newArray, "array");
-    return newArray;
-  };
+  useEffect(() => {
+    setSeven(populateNames(names));
+    console.log("Seven: ", seven);
+  }, []);
 
   useEffect(() => {
     setTimeout(() => {
@@ -143,71 +137,17 @@ export default function Test2(props) {
       }
 
       if (seconds === 0 && minutes === 0) {
-        calculateResult();
+        history.push({
+          pathname: "/Test7a",
+          state: seven,
+        });
+        // window.location = `/Test7a?seven=${seven}`;
       }
     }, 1000);
   }, [seconds]);
 
-  useEffect(() => {
-    setTimeout(() => {}, 1800000);
-  }, []);
-
-  const checkEqualToTen = (x) => {
-    // addClicked();
-    let v1 = x / 10;
-    let v2 = x % 10;
-    if (parseInt(v1 + v2) === 10) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-
-  const checkEqualToTenFinal = (x) => {
-    // addClicked();
-    let v1 = x / 10;
-    let v2 = x % 10;
-    if (parseInt(v1 + v2) === 10) {
-      addCorrect();
-    } else {
-      addWrong();
-    }
-  };
-
-  const calculateResult = () => {
-    let tempCorrect = 0;
-    let tempWrong = 0;
-    selectedValues.map((item) => {
-      let result = checkEqualToTen(item.value);
-      if (result) {
-        tempCorrect = tempCorrect + 1;
-      } else {
-        tempWrong = tempWrong + 1;
-      }
-    });
-    setCorrect(tempCorrect);
-    setWrong(tempWrong);
-    alert(`Your Score is: ${tempCorrect - tempWrong / 2}
-  And mistakes are: ${tempWrong}
-  Accuracy : ${((tempCorrect - tempWrong / 2) / 16) * 100}%`);
-    window.location = "/home";
-  };
-
-  // var arr = Array.from(
-  //   { length: 36 },
-  //   () => Math.floor(Math.random() * 89) + 10
-  // );
-  const [arr, setArr] = useState(populateArr([]));
-  // console.log(arr);
   const classes = useStyles();
   const [customClass, setCustomClass] = useState("arr");
-  const renderClass = () => {
-    if (customClass === "arr") {
-      return classes.red;
-    } else {
-      return classes.arr;
-    }
-  };
 
   return (
     <Box
@@ -258,8 +198,16 @@ export default function Test2(props) {
           </Typography>
         </Grid>
       </Grid>
-      <Typography variant="h4">Sum to 10</Typography>
+      <Typography variant="h4">First and Last name Test</Typography>
 
+      {/* <Typography variant="h5">
+        Instruction:{" "}
+        <Typography variant="h5">
+          You will be presented with a bunch of 2 digit numbers and you have to
+          select the ones that add u to 10, for example no 82 -{">"} 8 + 2 = 10
+          Good luck!
+        </Typography>{" "}
+      </Typography> */}
       <Grid
         container
         spacing={0}
@@ -269,41 +217,33 @@ export default function Test2(props) {
         //justify="center"
       >
         {/* {`Seconds: ${seconds}`} */}
-        {arr.map((number, index) => (
+        {seven.map((seven, index) => (
           <Grid
             key={index}
             item
             xs={6}
             sm={6}
-            md={2}
-            lg={2}
-            sm={2}
-            xl={2}
+            md={4}
+            lg={4}
+            sm={4}
+            xl={4}
             align="center"
           >
-            <ItemButton
-              number={number}
-              index={index}
-              addCorrect={addCorrect}
-              addWrong={addWrong}
-              addClicked={addClicked}
-              checkSelectedValue={checkSelectedValue}
-              selectedValues={selectedValues}
-            />
+            <Typography>
+              {seven.first} {seven.second}
+            </Typography>
           </Grid>
         ))}
       </Grid>
 
-      <Button
+      {/* <Button
         //className={classes.testLink}
-        onClick={() => {
-          calculateResult();
-        }}
+
         variant="contained"
         color="#F0F8FF"
       >
         Submit
-      </Button>
+      </Button> */}
     </Box>
   );
 }

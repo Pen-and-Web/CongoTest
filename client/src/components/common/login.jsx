@@ -29,7 +29,8 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     margin: "auto",
-    marginTop: "5%",
+    // marginTop: "5%",
+    textAlign: "center",
   },
   form: {
     "& > *": {
@@ -159,7 +160,13 @@ export default function Login({ onLogin }) {
   };
 
   return (
-    <div className={classes.root}>
+    <div
+      style={{
+        background: "rgb(148, 228, 247)",
+        height: "100vh",
+        paddingTop: "5%",
+      }}
+    >
       <Card className={classes.card}>
         <CardContent>
           <Typography variant="h5" component="h2">
@@ -220,7 +227,7 @@ export default function Login({ onLogin }) {
               size="small"
               className={classes.loginBtn}
               variant="contained"
-              color="primary"
+              color="#F0F8FF"
               onClick={(e) => {
                 handleSubmit(e);
               }}
@@ -247,7 +254,10 @@ export default function Login({ onLogin }) {
             </a>
           </div>
 
-          <NavLink to="/forgotPassword" style={{ marginTop: "1rem" }}>
+          <NavLink
+            to="/forgotPassword"
+            style={{ marginTop: "1rem", textAlign: "center" }}
+          >
             Forgot Password
           </NavLink>
         </CardContent>

@@ -11,6 +11,7 @@ require("./models/db");
 
 const userRouter = require("./routes/userRoutes");
 const auth = require("./routes/auth");
+const tests = require("./routes/tests");
 const passport = require("./passport/setup");
 
 app.use(express.json());
@@ -32,6 +33,11 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+// app.use("/api/tests", (req, res) => {
+//   res.send("hello2");
+// });
+app.use("/api/tests", tests);
+
 // Logs cookie info and requested URL
 app.all("*", (req, res, next) => {
   var origin = req.protocol + "://" + req.get("host") + req.originalUrl;
@@ -41,6 +47,7 @@ app.all("*", (req, res, next) => {
 });
 
 app.use("/api/auth", auth);
+// app.use("/api/tests", tests);
 app.use("/api/users", userRouter);
 
 app.use(express.static("client/build"));
