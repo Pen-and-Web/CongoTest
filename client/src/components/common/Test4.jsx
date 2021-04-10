@@ -7,6 +7,8 @@ import Box from "@material-ui/core/Box";
 import { NavLink } from "react-router-dom";
 import NumberButton from "./NumberButton";
 import { MdTimer } from "react-icons/md";
+import { useHistory } from "react-router-dom";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -67,6 +69,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Test4() {
+  let history = useHistory();
   const [words, setWords] = useState([
     "659:659",
     "7343801:7343801",
@@ -93,8 +96,8 @@ export default function Test4() {
   const [correct, setCorrect] = useState(0);
   const [wrong, setWrong] = useState(0);
   const [clicked, setClicked] = useState(0);
-  const [seconds, setSeconds] = useState(59);
-  const [minutes, setMinutes] = useState(2);
+  const [seconds, setSeconds] = useState(30);
+  const [minutes, setMinutes] = useState(1);
   const [timerBg, setTimerBg] = useState("#3f51b5");
   const [shuffle, setShuffle] = useState([]);
   const [selectedValues, setSelectedValues] = useState([]);
@@ -183,7 +186,7 @@ export default function Test4() {
     }
   };
 
-  const calculateResult = () => {
+  const calculateResult = async () => {
     let tempCorrect = 0;
     let tempWrong = 0;
     selectedValues.map((item) => {
@@ -196,10 +199,19 @@ export default function Test4() {
     });
     setCorrect(tempCorrect);
     setWrong(tempWrong);
-    alert(`Your Score is: ${tempCorrect - tempWrong / 2}
-  And mistakes are: ${tempWrong}
-  Accuracy : ${((tempCorrect - tempWrong / 2) / 24) * 100}%`);
-    window.location = "/home";
+    history.push({
+      pathname: "/Test42",
+      state: {
+        minutes: minutes,
+        seconds: seconds,
+        wrong: tempWrong,
+        correct: tempCorrect,
+      },
+    });
+    //   alert(`Your Score is: ${tempCorrect - tempWrong / 2}
+    // And mistakes are: ${tempWrong}
+    // Accuracy : ${((tempCorrect - tempWrong / 2) / 24) * 100}%`);
+    //   window.location = "/home";
   };
 
   const classes = useStyles();

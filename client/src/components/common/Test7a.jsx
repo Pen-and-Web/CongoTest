@@ -8,6 +8,7 @@ import { NavLink } from "react-router-dom";
 import ItemButton from "./ItemButton";
 import { MdTimer } from "react-icons/md";
 import TextField from "@material-ui/core/TextField";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -78,62 +79,73 @@ export default function Test7a(props) {
   const [value5, setValue5] = useState("");
   const [value6, setValue6] = useState("");
   const [value7, setValue7] = useState("");
-  const [correct, setCorrect] = useState(0);
-  const [wrong, setWrong] = useState(0);
+  // const [correct, setCorrect] = useState(0);
+  // const [wrong, setWrong] = useState(0);
 
-  const result = () => {
+  const result = async () => {
+    let correct = 0;
+    let wrong = 0;
+
     if (value1 === seven[0].first) {
-      console.log("Value 1:", value1);
-      console.log("Value 1:", seven[0].first);
-      setCorrect((correct) => correct + 1);
-      if (value2 === seven[1].first) {
-        console.log("Value 2:", value2);
-        console.log("Value 2:", seven[1].first);
-        setCorrect((correct) => correct + 1);
-        if (value3 === seven[2].first) {
-          console.log("Value 3:", value3);
-          console.log("Value 3:", seven[2].first);
-          setCorrect((correct) => correct + 1);
-          if (value4 === seven[3].first) {
-            console.log("Value 4:", value4);
-            console.log("Value 4:", seven[3].first);
-            setCorrect((correct) => correct + 1);
-            if (value5 === seven[4].first) {
-              console.log("Value 5:", value5);
-              console.log("Value 5:", seven[4].first);
-              setCorrect((correct) => correct + 1);
-              if (value6 === seven[5].first) {
-                console.log("Value 6:", value6);
-                console.log("Value 6:", seven[5].first);
-                setCorrect((correct) => correct + 1);
-                if (value7 === seven[6].first) {
-                  console.log("Value 7:", value7);
-                  console.log("Value 7:", seven[6].first);
-                  setCorrect((correct) => correct + 1);
-                } else {
-                  setWrong((wrong) => wrong + 1);
-                }
-              } else {
-                setWrong((wrong) => wrong + 1);
-              }
-            } else {
-              setWrong((wrong) => wrong + 1);
-            }
-          } else {
-            setWrong((wrong) => wrong + 1);
-          }
-        } else {
-          setWrong((wrong) => wrong + 1);
-        }
-      } else {
-        setWrong((wrong) => wrong + 1);
-      }
+      correct += 1;
     } else {
-      setWrong((wrong) => wrong + 1);
+      wrong += 1;
     }
-    console.log(correct, wrong);
+    if (value2 === seven[1].first) {
+      correct += 1;
+    } else {
+      wrong += 1;
+    }
+    if (value3 === seven[2].first) {
+      correct += 1;
+    } else {
+      wrong += 1;
+    }
+    if (value4 === seven[3].first) {
+      correct += 1;
+    } else {
+      wrong += 1;
+    }
+    if (value5 === seven[4].first) {
+      correct += 1;
+    } else {
+      wrong += 1;
+    }
+    if (value6 === seven[5].first) {
+      correct += 1;
+    } else {
+      wrong += 1;
+    }
+    if (value7 === seven[6].first) {
+      correct += 1;
+    } else {
+      wrong += 1;
+    }
+    console.log("A:B", correct, wrong);
 
-    alert(`Your Score is: ${correct}
+    let id = JSON.parse(localStorage.getItem("user"));
+    console.log("ID: ", id.id);
+
+    let result = ((correct - wrong / 2) / 7) * 100;
+
+    await axios
+      .post("http://localhost:3100/api/tests/postResult", {
+        userId: `${id.id}`,
+        testName: "First and Last name",
+        accuracy: result,
+        minutes: 3 - minutes,
+        seconds: 59 - seconds,
+        wrong: wrong,
+        correct: correct,
+      })
+      .then((response) => {
+        console.log("Post Response: ", response);
+      })
+      .catch((error) => {
+        console.log(error, "this error");
+      });
+
+    alert(`Your Score is: ${correct - wrong / 2}
 And mistakes are: ${wrong}
 Accuracy : ${((correct - wrong / 2) / 7) * 100}%`);
   };
@@ -344,49 +356,7 @@ Accuracy : ${((correct - wrong / 2) / 7) * 100}%`);
       <Button
         //className={classes.testLink}
         onClick={async () => {
-          let a = 0;
-          let b = 0;
-
-          if (value1 === seven[0].first) {
-            a += 1;
-          } else {
-            b += 1;
-          }
-          if (value2 === seven[1].first) {
-            a += 1;
-          } else {
-            b += 1;
-          }
-          if (value3 === seven[2].first) {
-            a += 1;
-          } else {
-            b += 1;
-          }
-          if (value4 === seven[3].first) {
-            a += 1;
-          } else {
-            b += 1;
-          }
-          if (value5 === seven[4].first) {
-            a += 1;
-          } else {
-            b += 1;
-          }
-          if (value6 === seven[5].first) {
-            a += 1;
-          } else {
-            b += 1;
-          }
-          if (value7 === seven[6].first) {
-            a += 1;
-          } else {
-            b += 1;
-          }
-          console.log("A:B", a, b);
-
-          alert(`Your Score is: ${a - b / 2}
-And mistakes are: ${b}
-Accuracy : ${((a - b / 2) / 7) * 100}%`);
+          result();
         }}
         variant="contained"
         color="#F0F8FF"

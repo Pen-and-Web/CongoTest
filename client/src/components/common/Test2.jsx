@@ -7,6 +7,7 @@ import Box from "@material-ui/core/Box";
 import { NavLink } from "react-router-dom";
 import ItemButton from "./ItemButton";
 import { MdTimer } from "react-icons/md";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -93,6 +94,17 @@ export default function Test2(props) {
   const [minutes, setMinutes] = useState(0);
   const [selectedValues, setSelectedValues] = useState([]);
   const [timerBg, setTimerBg] = useState("#3f51b5");
+  const [userId, setUserId] = useState();
+
+  const getUserId = () => {
+    let id = localStorage.getItem("user");
+    console.log("ID: ", id);
+    if (id !== null) {
+      console.log("ID: ", id);
+      // setUserId(JSON.parse(id.id));
+      console.log("User ID: ", userId);
+    }
+  };
 
   const addCorrect = () => {
     setCorrect(correct + 1);
@@ -149,7 +161,7 @@ export default function Test2(props) {
   }, [seconds]);
 
   useEffect(() => {
-    setTimeout(() => {}, 1800000);
+    // getUserId();
   }, []);
 
   const checkEqualToTen = (x) => {
@@ -174,7 +186,7 @@ export default function Test2(props) {
     }
   };
 
-  const calculateResult = () => {
+  const calculateResult = async () => {
     let tempCorrect = 0;
     let tempWrong = 0;
     selectedValues.map((item) => {
@@ -185,12 +197,33 @@ export default function Test2(props) {
         tempWrong = tempWrong + 1;
       }
     });
+    let id = JSON.parse(localStorage.getItem("user"));
+    console.log("ID: ", id.id);
+
+    let result = ((tempCorrect - tempWrong / 2) / 16) * 100;
+
+    await axios
+      .post("http://localhost:3100/api/tests/postResult", {
+        userId: `${id.id}`,
+        testName: "Sum to 10",
+        accuracy: result,
+        minutes: 2 - minutes,
+        seconds: 59 - seconds,
+        wrong: tempWrong,
+        correct: tempCorrect,
+      })
+      .then((response) => {
+        console.log("Post Response: ", response);
+      })
+      .catch((error) => {
+        console.log(error, "this error");
+      });
     setCorrect(tempCorrect);
     setWrong(tempWrong);
     alert(`Your Score is: ${tempCorrect - tempWrong / 2}
   And mistakes are: ${tempWrong}
   Accuracy : ${((tempCorrect - tempWrong / 2) / 16) * 100}%`);
-    window.location = "/home";
+    // window.location = "/home";
   };
 
   // var arr = Array.from(

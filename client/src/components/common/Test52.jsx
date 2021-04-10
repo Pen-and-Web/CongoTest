@@ -12,6 +12,7 @@ import { GoPrimitiveDot } from "react-icons/go";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Checkbox from "@material-ui/core/Checkbox";
 import { useHistory } from "react-router-dom";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -73,8 +74,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Test52() {
   let history = useHistory();
-  const [seconds, setSeconds] = useState(5);
-  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(59);
+  const [minutes, setMinutes] = useState(1);
   const [timerBg, setTimerBg] = useState("#3f51b5");
   const [one, setOne] = useState({
     a: "outlined",
@@ -138,6 +139,72 @@ export default function Test52() {
     }, 1000);
   }, [seconds]);
 
+  const calculateResult = async () => {
+    let tempCorrect = 0;
+    let tempWrong = 0;
+
+    if (one.c === "contained") {
+      tempCorrect = tempCorrect + 1;
+    } else {
+      tempWrong = tempWrong + 1;
+    }
+
+    if (two.b === "contained") {
+      tempCorrect = tempCorrect + 1;
+    } else {
+      tempWrong = tempWrong + 1;
+    }
+
+    if (three.d === "contained") {
+      tempCorrect = tempCorrect + 1;
+    } else {
+      tempWrong = tempWrong + 1;
+    }
+
+    if (four.d === "contained") {
+      tempCorrect = tempCorrect + 1;
+    } else {
+      tempWrong = tempWrong + 1;
+    }
+
+    if (five.d === "contained") {
+      tempCorrect = tempCorrect + 1;
+    } else {
+      tempWrong = tempWrong + 1;
+    }
+
+    let id = JSON.parse(localStorage.getItem("user"));
+    console.log("ID: ", id.id);
+
+    let result = ((tempCorrect - tempWrong / 2) / 10) * 100;
+
+    await axios
+      .post("http://localhost:3100/api/tests/postResult", {
+        userId: `${id.id}`,
+        testName: "Letter Sets",
+        accuracy: result,
+        minutes: 3 - minutes,
+        seconds: 59 - seconds,
+        wrong: tempWrong,
+        correct: tempCorrect,
+      })
+      .then((response) => {
+        console.log("Post Response: ", response);
+      })
+      .catch((error) => {
+        console.log(error, "this error");
+      });
+    // setCorrect(tempCorrect);
+    // setWrong(tempWrong);
+    alert(`Your Score is: ${tempCorrect - tempWrong / 2}
+  And mistakes are: ${tempWrong}
+  Accuracy : ${((tempCorrect - tempWrong / 2) / 10) * 100}%`);
+    //   alert(`Your Score is: ${tempCorrect - tempWrong / 2}
+    // And mistakes are: ${tempWrong}
+    // Accuracy : ${((tempCorrect - tempWrong / 2) / 24) * 100}%`);
+    //   window.location = "/home";
+  };
+
   const classes = useStyles();
 
   return (
@@ -189,7 +256,7 @@ export default function Test52() {
           </Typography>
         </Grid>
       </Grid>
-      <Typography variant="h4">Letter Sets Test Part 1</Typography>
+      <Typography variant="h4">Letter Sets Test Part 2</Typography>
 
       <Grid
         container

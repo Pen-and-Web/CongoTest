@@ -36,6 +36,7 @@ import {
 } from "./../src/services/authService";
 import ResetPassword from "./components/resetPassword";
 import ForgotPassword from "./components/forgotPassword";
+import Results from "./components/Results";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -97,6 +98,7 @@ function App() {
         <Route path="/Test62a" component={Test62a} />
         <Route path="/Test7" component={Test7} />
         <Route path="/Test7a" component={Test7a} />
+        <Route path="/Results" component={Results} />
       </Switch>
     </div>
   );

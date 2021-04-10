@@ -76,7 +76,7 @@ export default function Test6a() {
   const [correct, setCorrect] = useState(0);
   const [wrong, setWrong] = useState(0);
   const [seconds, setSeconds] = useState(59);
-  const [minutes, setMinutes] = useState(3);
+  const [minutes, setMinutes] = useState(0);
   const [timerBg, setTimerBg] = useState("#3f51b5");
   const [dining, setDining] = useState();
   const [torch, setTorch] = useState();
@@ -103,9 +103,7 @@ export default function Test6a() {
       }
 
       if (seconds === 0 && minutes === 0) {
-        history.push({
-          pathname: "/Test62",
-        });
+        calculateResult();
         // window.location = `/Test7a?seven=${seven}`;
       }
     }, 1000);
@@ -153,10 +151,19 @@ export default function Test6a() {
 
     setCorrect(tempCorrect);
     setWrong(tempWrong);
-    alert(`Your Score is: ${tempCorrect - tempWrong / 2}
-  And mistakes are: ${tempWrong}
-  Accuracy : ${((tempCorrect - tempWrong / 2) / 24) * 100}%`);
-    window.location = "/home";
+    history.push({
+      pathname: "/Test62",
+      state: {
+        minutes: minutes,
+        seconds: seconds,
+        wrong: tempWrong,
+        correct: tempCorrect,
+      },
+    });
+    //   alert(`Your Score is: ${tempCorrect - tempWrong / 2}
+    // And mistakes are: ${tempWrong}
+    // Accuracy : ${((tempCorrect - tempWrong / 2) / 24) * 100}%`);
+    //   window.location = "/home";
   };
 
   const classes = useStyles();

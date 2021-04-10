@@ -151,6 +151,7 @@ export default function Profile({ onSignup }) {
         background: "rgb(148, 228, 247)",
         height: "100vh",
         paddingTop: "5%",
+        textAlign: "center",
       }}
     >
       <Card className={classes.card}>
@@ -240,6 +241,17 @@ export default function Profile({ onSignup }) {
           </form>
         </CardContent>
       </Card>
+      <Button
+        size="large"
+        className={classes.registerBtn}
+        variant="contained"
+        color="primary"
+        onClick={(e) => {
+          history.push("/Results");
+        }}
+      >
+        View Test Results
+      </Button>
     </div>
   );
 }

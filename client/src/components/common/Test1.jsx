@@ -7,6 +7,7 @@ import Box from "@material-ui/core/Box";
 import { NavLink } from "react-router-dom";
 import Abutton from "./Abutton";
 import { MdTimer } from "react-icons/md";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -243,6 +244,10 @@ export default function Test1() {
       if (seconds <= 45 && minutes === 0) {
         setTimerBg("red");
       }
+
+      if (seconds === 0 && minutes === 0) {
+        calculateResult();
+      }
     }, 1000);
   }, [seconds]);
 
@@ -256,7 +261,7 @@ export default function Test1() {
     }
   };
 
-  const calculateResult = () => {
+  const calculateResult = async () => {
     let tempCorrect = 0;
     let tempWrong = 0;
     selectedValues.map((item) => {
@@ -267,6 +272,28 @@ export default function Test1() {
         tempWrong = tempWrong + 1;
       }
     });
+
+    let id = JSON.parse(localStorage.getItem("user"));
+    console.log("ID: ", id.id);
+
+    let result = ((tempCorrect - tempWrong / 2) / 24) * 100;
+
+    await axios
+      .post("http://localhost:3100/api/tests/postResult", {
+        userId: `${id.id}`,
+        testName: "Finding A's",
+        accuracy: result,
+        minutes: 2 - minutes,
+        seconds: 59 - seconds,
+        wrong: tempWrong,
+        correct: tempCorrect,
+      })
+      .then((response) => {
+        console.log("Post Response: ", response);
+      })
+      .catch((error) => {
+        console.log(error, "this error");
+      });
     setCorrect(tempCorrect);
     setWrong(tempWrong);
     alert(`Your Score is: ${tempCorrect - tempWrong / 2}

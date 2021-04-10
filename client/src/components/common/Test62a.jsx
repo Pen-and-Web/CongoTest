@@ -12,6 +12,7 @@ import { useHistory } from "react-router-dom";
 import { GoPrimitiveDot } from "react-icons/go";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Checkbox from "@material-ui/core/Checkbox";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -71,12 +72,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Test62a() {
+export default function Test62a(props) {
   let history = useHistory();
   const [correct, setCorrect] = useState(0);
   const [wrong, setWrong] = useState(0);
-  const [seconds, setSeconds] = useState(59);
-  const [minutes, setMinutes] = useState(3);
+  const [seconds, setSeconds] = useState(29);
+  const [minutes, setMinutes] = useState(2);
   const [timerBg, setTimerBg] = useState("#3f51b5");
   const [pen, setPen] = useState();
   const [mirror, setMirror] = useState();
@@ -94,9 +95,11 @@ export default function Test62a() {
   const [iron, setIron] = useState();
   const [shovel, setShovel] = useState();
 
-  const calculateResult = () => {
-    let tempCorrect = 0;
-    let tempWrong = 0;
+  const calculateResult = async () => {
+    let previous = props.history.location.state;
+    console.log("Previous: ", previous);
+    let tempCorrect = previous.correct;
+    let tempWrong = previous.wrong;
 
     if (hi === 32) {
       tempCorrect = tempCorrect + 1;
@@ -187,13 +190,32 @@ export default function Test62a() {
     } else {
       tempWrong = tempWrong + 1;
     }
+    let id = JSON.parse(localStorage.getItem("user"));
+    console.log("ID: ", id.id);
 
+    let result = ((tempCorrect - tempWrong / 2) / 21) * 100;
+
+    await axios
+      .post("http://localhost:3100/api/tests/postResult", {
+        userId: `${id.id}`,
+        testName: "Picture Number",
+        accuracy: result,
+        minutes: 2 - minutes,
+        seconds: 59 - seconds,
+        wrong: tempWrong,
+        correct: tempCorrect,
+      })
+      .then((response) => {
+        console.log("Post Response: ", response);
+      })
+      .catch((error) => {
+        console.log(error, "this error");
+      });
     setCorrect(tempCorrect);
     setWrong(tempWrong);
     alert(`Your Score is: ${tempCorrect - tempWrong / 2}
   And mistakes are: ${tempWrong}
-  Accuracy : ${((tempCorrect - tempWrong / 2) / 24) * 100}%`);
-    window.location = "/home";
+  Accuracy : ${((tempCorrect - tempWrong / 2) / 21) * 100}%`);
   };
 
   useEffect(() => {

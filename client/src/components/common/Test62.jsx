@@ -71,9 +71,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Test62() {
+export default function Test62(props) {
   let history = useHistory();
-  const [seconds, setSeconds] = useState(10);
+  const [seconds, setSeconds] = useState(29);
   const [minutes, setMinutes] = useState(0);
   const [timerBg, setTimerBg] = useState("#3f51b5");
 
@@ -94,12 +94,20 @@ export default function Test62() {
         setTimerBg("red");
       }
 
-      // if (seconds === 0 && minutes === 0) {
-      //   history.push({
-      //     pathname: "/Test62a",
-      //   });
-      //   // window.location = `/Test7a?seven=${seven}`;
-      // }
+      if (seconds === 0 && minutes === 0) {
+        let previous = props.history.location.state;
+        console.log("Previous:", previous);
+        history.push({
+          pathname: "/Test62a",
+          state: {
+            minutes: previous.minutes,
+            seconds: previous.seconds,
+            wrong: previous.wrong,
+            correct: previous.correct,
+          },
+        });
+        // window.location = `/Test7a?seven=${seven}`;
+      }
     }, 1000);
   }, [seconds]);
 

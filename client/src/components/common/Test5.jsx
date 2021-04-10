@@ -73,8 +73,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Test5() {
   let history = useHistory();
-  const [seconds, setSeconds] = useState(5);
-  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(59);
+  const [minutes, setMinutes] = useState(1);
   const [timerBg, setTimerBg] = useState("#3f51b5");
   const [one, setOne] = useState({
     a: "outlined",
@@ -112,6 +112,58 @@ export default function Test5() {
     e: "outlined",
   });
 
+  const calculateResult = () => {
+    let tempCorrect = 0;
+    let tempWrong = 0;
+
+    if (one.a === "contained") {
+      tempCorrect = tempCorrect + 1;
+    } else {
+      tempWrong = tempWrong + 1;
+    }
+
+    if (two.d === "contained") {
+      tempCorrect = tempCorrect + 1;
+    } else {
+      tempWrong = tempWrong + 1;
+    }
+
+    if (three.d === "contained") {
+      tempCorrect = tempCorrect + 1;
+    } else {
+      tempWrong = tempWrong + 1;
+    }
+
+    if (four.c === "contained") {
+      tempCorrect = tempCorrect + 1;
+    } else {
+      tempWrong = tempWrong + 1;
+    }
+
+    if (five.b === "contained") {
+      tempCorrect = tempCorrect + 1;
+    } else {
+      tempWrong = tempWrong + 1;
+    }
+
+    history.push({
+      pathname: "/Test52",
+      state: {
+        minutes: minutes,
+        seconds: seconds,
+        wrong: tempWrong,
+        correct: tempCorrect,
+      },
+    });
+
+    // setCorrect(tempCorrect);
+    // setWrong(tempWrong);
+    //   alert(`Your Score is: ${tempCorrect - tempWrong / 2}
+    // And mistakes are: ${tempWrong}
+    // Accuracy : ${((tempCorrect - tempWrong / 2) / 24) * 100}%`);
+    //   window.location = "/home";
+  };
+
   useEffect(() => {
     setTimeout(() => {
       if (seconds > 0 && minutes >= 0) {
@@ -129,12 +181,12 @@ export default function Test5() {
         setTimerBg("red");
       }
 
-      if (seconds === 0 && minutes === 0) {
-        history.push({
-          pathname: "/Test52",
-        });
-        // window.location = `/Test7a?seven=${seven}`;
-      }
+      // if (seconds === 0 && minutes === 0) {
+      //   history.push({
+      //     pathname: "/Test52",
+      //   });
+      //   // window.location = `/Test7a?seven=${seven}`;
+      // }
     }, 1000);
   }, [seconds]);
 
@@ -952,7 +1004,13 @@ export default function Test5() {
         </Grid>
       </Grid>
 
-      <Button onClick={() => {}} variant="contained" color="#F0F8FF">
+      <Button
+        onClick={() => {
+          calculateResult();
+        }}
+        variant="contained"
+        color="#F0F8FF"
+      >
         Submit
       </Button>
     </Box>

@@ -11,6 +11,7 @@ import { MdTimer } from "react-icons/md";
 import { GoPrimitiveDot } from "react-icons/go";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Checkbox from "@material-ui/core/Checkbox";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -84,6 +85,17 @@ export default function Test3() {
   const [segment8, setSegment8] = useState(false);
   const [segment9, setSegment9] = useState(false);
   const [segments, setSegments] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+  const [check1, setCheck1] = useState(false);
+  const [check2, setCheck2] = useState(false);
+  const [check3, setCheck3] = useState(false);
+  const [value1, setValue1] = useState();
+  const [value2, setValue2] = useState();
+  const [value3, setValue3] = useState();
+  const [value4, setValue4] = useState();
+  const [value5, setValue5] = useState();
+  const [value6, setValue6] = useState();
+  const [value7, setValue7] = useState();
+  const [value8, setValue8] = useState();
   const populateSegments = () => {
     let temp = segments.sort(() => Math.random() - 0.5);
     temp.length = 6;
@@ -144,6 +156,110 @@ export default function Test3() {
       }
     }, 1000);
   }, [seconds]);
+
+  const result = async () => {
+    let correct = 0;
+    let wrong = 0;
+
+    if (segment1 === true) {
+      if (value1 === 10 || value1 === 5) {
+        correct += 1;
+      } else {
+        wrong += 1;
+      }
+    }
+
+    if (segment2 === true) {
+      if (value2 === 20 || value2 === 15) {
+        correct += 1;
+      } else {
+        wrong += 1;
+      }
+    }
+
+    if (segment3 === true) {
+      if (value3 === 9 || value3 === 4) {
+        correct += 1;
+      } else {
+        wrong += 1;
+      }
+    }
+
+    if (segment4 === true) {
+      if (value4 === 30 || value4 === 29) {
+        correct += 1;
+      } else {
+        wrong += 1;
+      }
+    }
+
+    if (segment5 === true) {
+      if (value5 === 10 || value5 === 10) {
+        correct += 1;
+      } else {
+        wrong += 1;
+      }
+    }
+
+    if (segment6 === true) {
+      if (value6 === 10 || value6 === 5) {
+        correct += 1;
+      } else {
+        wrong += 1;
+      }
+    }
+
+    if (segment7 === true) {
+      if (value7 === 100 || value7 === 5) {
+        correct += 1;
+      } else {
+        wrong += 1;
+      }
+    }
+
+    if (segment8 === true) {
+      if (value8 === 24 || value8 === 47) {
+        correct += 1;
+      } else {
+        wrong += 1;
+      }
+    }
+
+    if (segment9 === true) {
+      if (check2 === true || check3 === true) {
+        correct += 1;
+      } else {
+        wrong += 1;
+      }
+    }
+
+    let id = JSON.parse(localStorage.getItem("user"));
+    console.log("ID: ", id.id);
+
+    let result = ((correct - wrong / 2) / 6) * 100;
+
+    await axios
+      .post("http://localhost:3100/api/tests/postResult", {
+        userId: `${id.id}`,
+        testName: "Cognitive Reflection",
+        accuracy: result,
+        minutes: 3 - minutes,
+        seconds: 59 - seconds,
+        wrong: wrong,
+        correct: correct,
+      })
+      .then((response) => {
+        console.log("Post Response: ", response);
+      })
+      .catch((error) => {
+        console.log(error, "this error");
+      });
+    // setCorrect(tempCorrect);
+    // setWrong(tempWrong);
+    alert(`Your Score is: ${correct - wrong / 2}
+  And mistakes are: ${wrong}
+  Accuracy : ${((correct - wrong / 2) / 6) * 100}%`);
+  };
 
   const classes = useStyles();
 
@@ -213,6 +329,8 @@ export default function Test3() {
               If three elves can wrap three toys in an hour, how many elves are
               needed to wrap six toys in 2 hours?{" "}
               <TextField
+                value={value1}
+                onChange={(e) => setValue1(e.target.value)}
                 //id="standard-number"
                 //label="Number"
                 type="number"
@@ -232,6 +350,8 @@ export default function Test3() {
               win a medal than short members. This year the team has won 60
               medals so far. How many of these have been won by short athletes?{" "}
               <TextField
+                value={value2}
+                onChange={(e) => setValue2(e.target.value)}
                 //id="standard-number"
                 //label="Number"
                 type="number"
@@ -250,6 +370,8 @@ export default function Test3() {
               drink one barrel of water in 12 days, how long would it take them
               to drink one barrel of water together?{" "}
               <TextField
+                value={value3}
+                onChange={(e) => setValue3(e.target.value)}
                 //id="standard-number"
                 //label="Number"
                 type="number"
@@ -267,6 +389,8 @@ export default function Test3() {
               Jerry received both the 15th highest and the 15th lowest mark in
               the class. How many students are in the class?{" "}
               <TextField
+                value={value4}
+                onChange={(e) => setValue4(e.target.value)}
                 //id="standard-number"
                 //label="Number"
                 type="number"
@@ -284,6 +408,8 @@ export default function Test3() {
               it back for $80, and sells it finally for $90. How much has he
               made?{" "}
               <TextField
+                value={value5}
+                onChange={(e) => setValue5(e.target.value)}
                 //id="standard-number"
                 //label="Number"
                 type="number"
@@ -300,6 +426,8 @@ export default function Test3() {
               <GoPrimitiveDot />A bat and a ball cost $1.10 in total. The bat
               costs $1.00 more than the ball. How much does the ball cost?{" "}
               <TextField
+                value={value6}
+                onChange={(e) => setValue6(e.target.value)}
                 //id="standard-number"
                 //label="Number"
                 // endAdornment={
@@ -325,6 +453,8 @@ export default function Test3() {
               If it takes 5 machines 5 minutes to make 5 widgets, how long would
               it take 100 machines to make 100 widgets?{" "}
               <TextField
+                value={value7}
+                onChange={(e) => setValue7(e.target.value)}
                 //id="standard-number"
                 //label="Number"
                 InputProps={{
@@ -349,6 +479,8 @@ export default function Test3() {
               entire lake, how long would it take for the patch to cover half
               the lake?{" "}
               <TextField
+                value={value8}
+                onChange={(e) => setValue8(e.target.value)}
                 //id="standard-number"
                 //label="Number"
                 InputProps={{
@@ -376,8 +508,12 @@ export default function Test3() {
             </Typography>
             <Typography>
               <Checkbox
-                //checked={state.checkedB}
-                //onChange={handleChange}
+                checked={check1}
+                onChange={(e) => {
+                  setCheck1(!e.target.check1);
+                  setCheck2(e.target.check2);
+                  setCheck3(e.target.check3);
+                }}
                 name="checkedB"
                 color="primary"
               />{" "}
@@ -385,8 +521,12 @@ export default function Test3() {
             </Typography>
             <Typography>
               <Checkbox
-                //checked={state.checkedB}
-                //onChange={handleChange}
+                checked={check2}
+                onChange={(e) => {
+                  setCheck2(!e.target.check2);
+                  setCheck1(e.target.check1);
+                  setCheck3(e.target.check3);
+                }}
                 name="checkedB"
                 color="primary"
               />{" "}
@@ -394,8 +534,12 @@ export default function Test3() {
             </Typography>
             <Typography>
               <Checkbox
-                //checked={state.checkedB}
-                //onChange={handleChange}
+                checked={check3}
+                onChange={(e) => {
+                  setCheck3(!e.target.check3);
+                  setCheck2(e.target.check2);
+                  setCheck1(e.target.check1);
+                }}
                 name="checkedB"
                 color="primary"
               />{" "}
@@ -406,6 +550,7 @@ export default function Test3() {
       </Grid>
 
       <Button
+        onClick={result}
         //className={classes.testLink}
         //         onClick={() => {
         //           alert(`Your Score is: ${correct - wrong / 2}

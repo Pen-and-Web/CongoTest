@@ -7,6 +7,7 @@ import Box from "@material-ui/core/Box";
 import { NavLink } from "react-router-dom";
 import NumberButton from "./NumberButton";
 import { MdTimer } from "react-icons/md";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -66,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Test42() {
+export default function Test42(props) {
   const [words, setWords] = useState([
     "eok35:eko35",
     "7343801:7343801",
@@ -93,8 +94,8 @@ export default function Test42() {
   const [correct, setCorrect] = useState(0);
   const [wrong, setWrong] = useState(0);
   const [clicked, setClicked] = useState(0);
-  const [seconds, setSeconds] = useState(59);
-  const [minutes, setMinutes] = useState(2);
+  const [seconds, setSeconds] = useState(30);
+  const [minutes, setMinutes] = useState(1);
   const [timerBg, setTimerBg] = useState("#3f51b5");
   const [shuffle, setShuffle] = useState([]);
   const [selectedValues, setSelectedValues] = useState([]);
@@ -183,9 +184,11 @@ export default function Test42() {
     }
   };
 
-  const calculateResult = () => {
-    let tempCorrect = 0;
-    let tempWrong = 0;
+  const calculateResult = async () => {
+    let previous = props.history.location.state;
+    console.log("Previous: ", previous);
+    let tempCorrect = previous.correct;
+    let tempWrong = previous.wrong;
     selectedValues.map((item) => {
       let result = checkA(item.value);
       if (result) {
@@ -194,12 +197,36 @@ export default function Test42() {
         tempWrong = tempWrong + 1;
       }
     });
+    let id = JSON.parse(localStorage.getItem("user"));
+    console.log("ID: ", id.id);
+
+    let result = ((tempCorrect - tempWrong / 2) / 22) * 100;
+
+    await axios
+      .post("http://localhost:3100/api/tests/postResult", {
+        userId: `${id.id}`,
+        testName: "Number Comparison",
+        accuracy: result,
+        minutes: 2 - minutes,
+        seconds: 59 - seconds,
+        wrong: tempWrong,
+        correct: tempCorrect,
+      })
+      .then((response) => {
+        console.log("Post Response: ", response);
+      })
+      .catch((error) => {
+        console.log(error, "this error");
+      });
     setCorrect(tempCorrect);
     setWrong(tempWrong);
     alert(`Your Score is: ${tempCorrect - tempWrong / 2}
   And mistakes are: ${tempWrong}
-  Accuracy : ${((tempCorrect - tempWrong / 2) / 24) * 100}%`);
-    window.location = "/home";
+  Accuracy : ${((tempCorrect - tempWrong / 2) / 16) * 100}%`);
+    //   alert(`Your Score is: ${tempCorrect - tempWrong / 2}
+    // And mistakes are: ${tempWrong}
+    // Accuracy : ${((tempCorrect - tempWrong / 2) / 24) * 100}%`);
+    //   window.location = "/home";
   };
 
   const classes = useStyles();
@@ -253,7 +280,7 @@ export default function Test42() {
           </Typography>
         </Grid>
       </Grid>
-      <Typography variant="h4">Number Comparison Test 1</Typography>
+      <Typography variant="h4">Number Comparison Test 2</Typography>
 
       <Grid
         container

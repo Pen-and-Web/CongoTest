@@ -152,6 +152,7 @@ export const getUserLocalStorage = () => {
 export const setUserLocalStorage = (user) => {
   console.log("Localstorage: ", JSON.stringify(user));
   localStorage.setItem("user", JSON.stringify(user));
+  // localStorage.setItem("userId", JSON.stringify(user.id));
 };
 
 export default {
