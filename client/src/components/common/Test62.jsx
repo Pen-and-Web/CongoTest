@@ -94,12 +94,12 @@ export default function Test62() {
         setTimerBg("red");
       }
 
-      if (seconds === 0 && minutes === 0) {
-        history.push({
-          pathname: "/Test62a",
-        });
-        // window.location = `/Test7a?seven=${seven}`;
-      }
+      // if (seconds === 0 && minutes === 0) {
+      //   history.push({
+      //     pathname: "/Test62a",
+      //   });
+      //   // window.location = `/Test7a?seven=${seven}`;
+      // }
     }, 1000);
   }, [seconds]);
 
@@ -298,7 +298,7 @@ export default function Test62() {
                 <Box borderRight={1}>
                   <img
                     src="images/014-shovel.png"
-                    alt="Shovel"
+                    alt="Dog Seating"
                     className="home__hero-img"
                   />
                 </Box>

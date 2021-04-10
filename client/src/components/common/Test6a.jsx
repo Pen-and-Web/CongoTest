@@ -73,9 +73,17 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Test6a() {
   let history = useHistory();
+  const [correct, setCorrect] = useState(0);
+  const [wrong, setWrong] = useState(0);
   const [seconds, setSeconds] = useState(59);
   const [minutes, setMinutes] = useState(3);
   const [timerBg, setTimerBg] = useState("#3f51b5");
+  const [dining, setDining] = useState();
+  const [torch, setTorch] = useState();
+  const [boiling, setBoiling] = useState();
+  const [rat, setRat] = useState();
+  const [cup, setCup] = useState();
+  const [ship, setShip] = useState();
 
   useEffect(() => {
     setTimeout(() => {
@@ -102,6 +110,54 @@ export default function Test6a() {
       }
     }, 1000);
   }, [seconds]);
+
+  const calculateResult = () => {
+    let tempCorrect = 0;
+    let tempWrong = 0;
+
+    if (dining === 34) {
+      tempCorrect = tempCorrect + 1;
+    } else {
+      tempWrong = tempWrong + 1;
+    }
+
+    if (torch === 46) {
+      tempCorrect = tempCorrect + 1;
+    } else {
+      tempWrong = tempWrong + 1;
+    }
+
+    if (boiling === 55) {
+      tempCorrect = tempCorrect + 1;
+    } else {
+      tempWrong = tempWrong + 1;
+    }
+
+    if (rat === 73) {
+      tempCorrect = tempCorrect + 1;
+    } else {
+      tempWrong = tempWrong + 1;
+    }
+
+    if (cup === 69) {
+      tempCorrect = tempCorrect + 1;
+    } else {
+      tempWrong = tempWrong + 1;
+    }
+
+    if (ship === 10) {
+      tempCorrect = tempCorrect + 1;
+    } else {
+      tempWrong = tempWrong + 1;
+    }
+
+    setCorrect(tempCorrect);
+    setWrong(tempWrong);
+    alert(`Your Score is: ${tempCorrect - tempWrong / 2}
+  And mistakes are: ${tempWrong}
+  Accuracy : ${((tempCorrect - tempWrong / 2) / 24) * 100}%`);
+    window.location = "/home";
+  };
 
   const classes = useStyles();
 
@@ -154,7 +210,7 @@ export default function Test6a() {
           </Typography>
         </Grid>
       </Grid>
-      <Typography variant="h4">Picture Number Test</Typography>
+      <Typography variant="h4">Picture Number Test 1</Typography>
 
       <Grid
         container
@@ -179,8 +235,8 @@ export default function Test6a() {
               </Grid>
               <Grid item xs={6}>
                 <TextField
-                  //value={value1}
-                  //onChange={(e) => setValue1(e.target.value)}
+                  value={dining}
+                  onChange={(e) => setDining(e.target.value)}
                   //id="standard-number"
                   //label="Number"
                   //type="number"
@@ -206,8 +262,8 @@ export default function Test6a() {
               </Grid>
               <Grid item xs={6}>
                 <TextField
-                  //value={value1}
-                  //onChange={(e) => setValue1(e.target.value)}
+                  value={torch}
+                  onChange={(e) => setTorch(e.target.value)}
                   //id="standard-number"
                   //label="Number"
                   //type="number"
@@ -233,8 +289,8 @@ export default function Test6a() {
               </Grid>
               <Grid item xs={6}>
                 <TextField
-                  //value={value1}
-                  //onChange={(e) => setValue1(e.target.value)}
+                  value={boiling}
+                  onChange={(e) => setBoiling(e.target.value)}
                   //id="standard-number"
                   //label="Number"
                   //type="number"
@@ -260,8 +316,8 @@ export default function Test6a() {
               </Grid>
               <Grid item xs={6}>
                 <TextField
-                  //value={value1}
-                  //onChange={(e) => setValue1(e.target.value)}
+                  value={rat}
+                  onChange={(e) => setRat(e.target.value)}
                   //id="standard-number"
                   //label="Number"
                   //type="number"
@@ -287,8 +343,8 @@ export default function Test6a() {
               </Grid>
               <Grid item xs={6}>
                 <TextField
-                  //value={value1}
-                  //onChange={(e) => setValue1(e.target.value)}
+                  value={cup}
+                  onChange={(e) => setCup(e.target.value)}
                   //id="standard-number"
                   //label="Number"
                   //type="number"
@@ -314,8 +370,8 @@ export default function Test6a() {
               </Grid>
               <Grid item xs={6}>
                 <TextField
-                  //value={value1}
-                  //onChange={(e) => setValue1(e.target.value)}
+                  value={ship}
+                  onChange={(e) => setShip(e.target.value)}
                   //id="standard-number"
                   //label="Number"
                   //type="number"

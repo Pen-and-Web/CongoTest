@@ -3,14 +3,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
 import Box from "@material-ui/core/Box";
 import { NavLink } from "react-router-dom";
-import Abutton from "./Abutton";
+import NumberButton from "./NumberButton";
 import { MdTimer } from "react-icons/md";
-import { GoPrimitiveDot } from "react-icons/go";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import Checkbox from "@material-ui/core/Checkbox";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -71,30 +67,59 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Test42() {
-  const populateArr = (arr) => {
-    while (arr.length < 36) {
-      var r = Math.floor(Math.random() * 89) + 10;
-      if (arr.length < 20) {
-        if (!checkEqualToTen(r)) {
-          arr.push(r);
-        }
-      } else {
-        if (checkEqualToTen(r)) {
-          arr.push(r);
-        }
-      }
-    }
-    let arr1 = [];
-    arr1 = arr.sort(() => Math.random() - 0.5);
-    return arr1;
-  };
+  const [words, setWords] = useState([
+    "eok35:eko35",
+    "7343801:7343801",
+    "w563g:w536g",
+    "18824:18824",
+    "aslk5:asl5k",
+    "705216831:795216831",
+    "dwl53:dwi53",
+    "971:971",
+    "qk4kg:gk4kg",
+    "446014721:446014721",
+    "frk3r:frkr3",
+    "5173869:5172869",
+    "gfm35:gfn35",
+    "6430017:6430017",
+    "a9u47:a9u74",
+    "518198045:518168045",
+    "flk64:fik64",
+    "55179:55097",
+    "twnl3:townl3",
+    "m35ja:m35ga",
+  ]);
 
   const [correct, setCorrect] = useState(0);
   const [wrong, setWrong] = useState(0);
   const [clicked, setClicked] = useState(0);
   const [seconds, setSeconds] = useState(59);
-  const [minutes, setMinutes] = useState(3);
+  const [minutes, setMinutes] = useState(2);
   const [timerBg, setTimerBg] = useState("#3f51b5");
+  const [shuffle, setShuffle] = useState([]);
+  const [selectedValues, setSelectedValues] = useState([]);
+
+  const checkSelectedValue = (data, index) => {
+    const obj = { id: index, value: data };
+    let push = true;
+    selectedValues.map((item) => {
+      if (item.id === index) {
+        push = false;
+      }
+    });
+    let newArray = selectedValues.filter((item) => item.id != index);
+    if (push) {
+      if (selectedValues.length < 11) {
+        selectedValues.push(obj);
+      } else {
+        alert("You have aleadry selected 16 numbers");
+      }
+    } else {
+      setSelectedValues(newArray);
+    }
+    console.log(newArray, "array");
+    return newArray;
+  };
 
   const addCorrect = () => {
     setCorrect(correct + 1);
@@ -105,6 +130,17 @@ export default function Test42() {
   const addClicked = () => {
     setClicked(clicked + 1);
   };
+
+  const populateWords = (arr) => {
+    arr.sort(() => Math.random() - 0.5);
+
+    return arr;
+  };
+
+  useEffect(() => {
+    setShuffle(populateWords(words));
+    console.log("Shuffled: ", shuffle);
+  }, []);
 
   useEffect(() => {
     setTimeout(() => {
@@ -125,45 +161,49 @@ export default function Test42() {
     }, 1000);
   }, [seconds]);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setClicked(16);
-    }, 1800000);
-  }, []);
+  const checkA = (a) => {
+    // addClicked();
 
-  useEffect(() => {
-    if (clicked === 16) {
-      alert(`Your Score is: ${correct - wrong / 2}
-And mistakes are: ${wrong}
-Accuracy : ${((correct - wrong / 2) / 16) * 100}%`);
-      window.location = "/home";
-    }
-  }, [clicked]);
-
-  const checkEqualToTen = (x) => {
-    let v1 = x / 10;
-    let v2 = x % 10;
-    if (parseInt(v1 + v2) === 10) {
+    if (
+      a === "twnl3:townl3" ||
+      a === "m35ja:m35ga" ||
+      a === "eok35:eko35" ||
+      a === "w563g:w536g" ||
+      a === "aslk5:asl5k" ||
+      a === "dwl53:dwi53" ||
+      a === "qk4kg:gk4kg" ||
+      a === "frk3r:frkr3" ||
+      a === "gfm35:gfn35" ||
+      a === "a9u47:a9u74" ||
+      a === "flk64:fik64"
+    ) {
       return true;
     } else {
       return false;
     }
   };
-  // var arr = Array.from(
-  //   { length: 36 },
-  //   () => Math.floor(Math.random() * 89) + 10
-  // );
-  const [arr, setArr] = useState(populateArr([]));
-  console.log(arr);
-  const classes = useStyles();
-  const [customClass, setCustomClass] = useState("arr");
-  const renderClass = () => {
-    if (customClass === "arr") {
-      return classes.red;
-    } else {
-      return classes.arr;
-    }
+
+  const calculateResult = () => {
+    let tempCorrect = 0;
+    let tempWrong = 0;
+    selectedValues.map((item) => {
+      let result = checkA(item.value);
+      if (result) {
+        tempCorrect = tempCorrect + 1;
+      } else {
+        tempWrong = tempWrong + 1;
+      }
+    });
+    setCorrect(tempCorrect);
+    setWrong(tempWrong);
+    alert(`Your Score is: ${tempCorrect - tempWrong / 2}
+  And mistakes are: ${tempWrong}
+  Accuracy : ${((tempCorrect - tempWrong / 2) / 24) * 100}%`);
+    window.location = "/home";
   };
+
+  const classes = useStyles();
+
   return (
     <Box
       justifyContent="center"
@@ -173,16 +213,16 @@ Accuracy : ${((correct - wrong / 2) / 16) * 100}%`);
       //alignItems="stretch"
       padding={10}
       // bgcolor="warning.main"
-      //align="center"
+      align="center"
       className={classes.root}
       style={{ background: "#94e4f7" }}
-      height="100vh"
+      //height="100vh"
       //display="flex"
     >
       <Grid
         container
         spacing={0}
-        //alignItems="center"
+        alignItems="center"
         style={{ marginBottom: 25 }}
       >
         <Grid item xs={0} sm={0} md={10} lg={10} xl={10}></Grid>
@@ -213,267 +253,44 @@ Accuracy : ${((correct - wrong / 2) / 16) * 100}%`);
           </Typography>
         </Grid>
       </Grid>
-      <Typography variant="h4">Number Comparison test Part 2</Typography>
+      <Typography variant="h4">Number Comparison Test 1</Typography>
 
       <Grid
         container
-        spacing={1}
-        style={{ marginTop: 50 }}
-        align="center"
-
+        spacing={0}
+        style={{ marginTop: 100 }}
         //direction="row"
         //alignItems="center"
         //justify="center"
       >
-        <Grid item xs={6} sm={6} md={3} lg={3} xl={3}>
-          <Button
-            //onClick={() => checkEqualToTen(props.number)}
-            variant="outlined"
-            //color="primary"
-            // disabled={disabled}
-            // disableElevation={true}
-            //className={renderClass()}
+        {shuffle.map((word, index) => (
+          <Grid
+            key={index}
+            item
+            xs={12}
+            sm={6}
+            md={2}
+            lg={2}
+            xl={2}
+            align="center"
           >
-            fdsp2:fdsp2
-          </Button>
-        </Grid>
-        <Grid item xs={6} sm={6} md={3} lg={3} xl={3}>
-          <Button
-            //onClick={() => checkEqualToTen(props.number)}
-            variant="outlined"
-            //color="primary"
-            // disabled={disabled}
-            // disableElevation={true}
-            //className={renderClass()}
-          >
-            sa245:sa245
-          </Button>
-        </Grid>
-        <Grid item xs={6} sm={6} md={3} lg={3} xl={3}>
-          <Button
-            //onClick={() => checkEqualToTen(props.number)}
-            variant="outlined"
-            //color="primary"
-            // disabled={disabled}
-            // disableElevation={true}
-            //className={renderClass()}
-          >
-            dfvm4:dfvm4
-          </Button>
-        </Grid>
-        <Grid item xs={6} sm={6} md={3} lg={3} xl={3}>
-          <Button
-            //onClick={() => checkEqualToTen(props.number)}
-            variant="outlined"
-            //color="primary"
-            // disabled={disabled}
-            // disableElevation={true}
-            //className={renderClass()}
-          >
-            w563g:w536g
-          </Button>
-        </Grid>
-        <Grid item xs={6} sm={6} md={3} lg={3} xl={3}>
-          <Button
-            //onClick={() => checkEqualToTen(props.number)}
-            variant="outlined"
-            //color="primary"
-            // disabled={disabled}
-            // disableElevation={true}
-            //className={renderClass()}
-          >
-            eok35:eko35
-          </Button>
-        </Grid>
-        <Grid item xs={6} sm={6} md={3} lg={3} xl={3}>
-          <Button
-            //onClick={() => checkEqualToTen(props.number)}
-            variant="outlined"
-            //color="primary"
-            // disabled={disabled}
-            // disableElevation={true}
-            //className={renderClass()}
-          >
-            dkwp3:dkwp3
-          </Button>
-        </Grid>
-        <Grid item xs={6} sm={6} md={3} lg={3} xl={3}>
-          <Button
-            //onClick={() => checkEqualToTen(props.number)}
-            variant="outlined"
-            //color="primary"
-            // disabled={disabled}
-            // disableElevation={true}
-            //className={renderClass()}
-          >
-            wek46:wek46
-          </Button>
-        </Grid>
-        <Grid item xs={6} sm={6} md={3} lg={3} xl={3}>
-          <Button
-            //onClick={() => checkEqualToTen(props.number)}
-            variant="outlined"
-            //color="primary"
-            // disabled={disabled}
-            // disableElevation={true}
-            //className={renderClass()}
-          >
-            kp57d:kp57d
-          </Button>
-        </Grid>
-        <Grid item xs={6} sm={6} md={3} lg={3} xl={3}>
-          <Button
-            //onClick={() => checkEqualToTen(props.number)}
-            variant="outlined"
-            //color="primary"
-            // disabled={disabled}
-            // disableElevation={true}
-            //className={renderClass()}
-          >
-            adp53:adp53
-          </Button>
-        </Grid>
-        <Grid item xs={6} sm={6} md={3} lg={3} xl={3}>
-          <Button
-            //onClick={() => checkEqualToTen(props.number)}
-            variant="outlined"
-            //color="primary"
-            // disabled={disabled}
-            // disableElevation={true}
-            //className={renderClass()}
-          >
-            sdlp4:sdlp4
-          </Button>
-        </Grid>
-        <Grid item xs={6} sm={6} md={3} lg={3} xl={3}>
-          <Button
-            //onClick={() => checkEqualToTen(props.number)}
-            variant="outlined"
-            //color="primary"
-            // disabled={disabled}
-            // disableElevation={true}
-            //className={renderClass()}
-          >
-            fnk3k:fnk3k
-          </Button>
-        </Grid>
-        <Grid item xs={6} sm={6} md={3} lg={3} xl={3}>
-          <Button
-            //onClick={() => checkEqualToTen(props.number)}
-            variant="outlined"
-            //color="primary"
-            // disabled={disabled}
-            // disableElevation={true}
-            //className={renderClass()}
-          >
-            aslk5:asl5k
-          </Button>
-        </Grid>
-        <Grid item xs={6} sm={6} md={3} lg={3} xl={3}>
-          <Button
-            //onClick={() => checkEqualToTen(props.number)}
-            variant="outlined"
-            //color="primary"
-            // disabled={disabled}
-            // disableElevation={true}
-            //className={renderClass()}
-          >
-            aoj53:aoj53
-          </Button>
-        </Grid>
-        <Grid item xs={6} sm={6} md={3} lg={3} xl={3}>
-          <Button
-            //onClick={() => checkEqualToTen(props.number)}
-            variant="outlined"
-            //color="primary"
-            // disabled={disabled}
-            // disableElevation={true}
-            //className={renderClass()}
-          >
-            vmpt4:vmpt4
-          </Button>
-        </Grid>
-        <Grid item xs={6} sm={6} md={3} lg={3} xl={3}>
-          <Button
-            //onClick={() => checkEqualToTen(props.number)}
-            variant="outlined"
-            //color="primary"
-            // disabled={disabled}
-            // disableElevation={true}
-            //className={renderClass()}
-          >
-            repk3:repk3
-          </Button>
-        </Grid>
-        <Grid item xs={6} sm={6} md={3} lg={3} xl={3}>
-          <Button
-            //onClick={() => checkEqualToTen(props.number)}
-            variant="outlined"
-            //color="primary"
-            // disabled={disabled}
-            // disableElevation={true}
-            //className={renderClass()}
-          >
-            dwl53:dwi53
-          </Button>
-        </Grid>
-        <Grid item xs={6} sm={6} md={3} lg={3} xl={3}>
-          <Button
-            //onClick={() => checkEqualToTen(props.number)}
-            variant="outlined"
-            //color="primary"
-            // disabled={disabled}
-            // disableElevation={true}
-            //className={renderClass()}
-          >
-            5r9t4:5r9t4
-          </Button>
-        </Grid>
-        <Grid item xs={6} sm={6} md={3} lg={3} xl={3}>
-          <Button
-            //onClick={() => checkEqualToTen(props.number)}
-            variant="outlined"
-            //color="primary"
-            // disabled={disabled}
-            // disableElevation={true}
-            //className={renderClass()}
-          >
-            grkp4:grkp4
-          </Button>
-        </Grid>
-        <Grid item xs={6} sm={6} md={3} lg={3} xl={3}>
-          <Button
-            //onClick={() => checkEqualToTen(props.number)}
-            variant="outlined"
-            //color="primary"
-            // disabled={disabled}
-            // disableElevation={true}
-            //className={renderClass()}
-          >
-            gfm35:gfn35
-          </Button>
-        </Grid>
-        <Grid item xs={6} sm={6} md={3} lg={3} xl={3}>
-          <Button
-            //onClick={() => checkEqualToTen(props.number)}
-            variant="outlined"
-            //color="primary"
-            // disabled={disabled}
-            // disableElevation={true}
-            //className={renderClass()}
-          >
-            dl35jt:dl35jt
-          </Button>
-        </Grid>
+            <NumberButton
+              word={word}
+              index={index}
+              addCorrect={addCorrect}
+              addWrong={addWrong}
+              addClicked={addClicked}
+              checkSelectedValue={checkSelectedValue}
+              selectedValues={selectedValues}
+            />
+          </Grid>
+        ))}
       </Grid>
 
       <Button
         //className={classes.testLink}
         onClick={() => {
-          alert(`Your Score is: ${correct - wrong / 2}
-And mistakes are: ${wrong}
-Accuracy : ${((correct - wrong / 2) / 16) * 100}%`);
-          window.location = "/home";
+          calculateResult();
         }}
         variant="contained"
         color="#F0F8FF"

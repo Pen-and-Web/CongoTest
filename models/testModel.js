@@ -3,15 +3,15 @@ const mongoose = require("mongoose");
 const TestSchema = new mongoose.Schema({
   userId: {
     type: String,
-    required: [true, "Please tell us your First Name"],
+    required: [true, "User Id required."],
   },
-  testNumber: {
-    type: Number,
-    required: [true, "Test Number Required"],
+  testName: {
+    type: String,
+    required: [true, "Test Name Required"],
   },
   attempt: {
     type: Number,
-    required: [true, "Attempt number required"],
+    required: [false, "Attempt number required"],
   },
   accuracy: {
     type: Number,

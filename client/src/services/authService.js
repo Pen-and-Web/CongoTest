@@ -1,8 +1,8 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
-// export const apiUrl = "https://surveyapp786.herokuapp.com/api";
-export const apiUrl = "http://localhost:3100/api";
+export const apiUrl = "https://surveyapp786.herokuapp.com/api";
+// export const apiUrl = "http://localhost:3100/api";
 
 // http://68.183.135.125:3100/api/auth/signup
 

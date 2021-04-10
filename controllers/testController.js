@@ -34,7 +34,7 @@ const deleteUserResult = async (req, res) => {
 const testResult = async (req, res) => {
   const {
     userId,
-    testNumber,
+    testName,
     attempt,
     accuracy,
     minutes,
@@ -43,10 +43,13 @@ const testResult = async (req, res) => {
     correct,
   } = req.body;
 
+  let obj = await Test.find({ userId: userId, testName: testName });
+  console.log(obj);
+
   const newTestResult = new Test({
     userId,
-    testNumber,
-    attempt,
+    testName,
+    attempt: obj.length + 1,
     accuracy,
     minutes,
     seconds,
@@ -59,7 +62,7 @@ const testResult = async (req, res) => {
     console.log("Test Result Posted");
     return res.status(200).json(newTestResult);
   } catch (error) {
-    return res.status(400).json({ message: "Test Result not posted." });
+    return res.status(400).json({ message: error });
   }
 };
 

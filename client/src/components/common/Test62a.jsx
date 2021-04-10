@@ -73,9 +73,128 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Test62a() {
   let history = useHistory();
+  const [correct, setCorrect] = useState(0);
+  const [wrong, setWrong] = useState(0);
   const [seconds, setSeconds] = useState(59);
   const [minutes, setMinutes] = useState(3);
   const [timerBg, setTimerBg] = useState("#3f51b5");
+  const [pen, setPen] = useState();
+  const [mirror, setMirror] = useState();
+  const [rugbyBall, setRugbyBall] = useState();
+  const [bucket, setBucket] = useState();
+  const [lawBook, setLawBook] = useState();
+  const [pin, setPin] = useState();
+  const [dogSeating, setDogSeating] = useState();
+  const [vase, setVase] = useState();
+  const [screwDriver, setScrewDriver] = useState();
+  const [thermometer, setThermometer] = useState();
+  const [petBrush, setPetBrush] = useState();
+  const [shoe, setShoe] = useState();
+  const [hi, setHi] = useState();
+  const [iron, setIron] = useState();
+  const [shovel, setShovel] = useState();
+
+  const calculateResult = () => {
+    let tempCorrect = 0;
+    let tempWrong = 0;
+
+    if (hi === 32) {
+      tempCorrect = tempCorrect + 1;
+    } else {
+      tempWrong = tempWrong + 1;
+    }
+
+    if (iron === 88) {
+      tempCorrect = tempCorrect + 1;
+    } else {
+      tempWrong = tempWrong + 1;
+    }
+
+    if (shovel === 86) {
+      tempCorrect = tempCorrect + 1;
+    } else {
+      tempWrong = tempWrong + 1;
+    }
+
+    if (dogSeating === 27) {
+      tempCorrect = tempCorrect + 1;
+    } else {
+      tempWrong = tempWrong + 1;
+    }
+
+    if (vase === 13) {
+      tempCorrect = tempCorrect + 1;
+    } else {
+      tempWrong = tempWrong + 1;
+    }
+
+    if (screwDriver === 51) {
+      tempCorrect = tempCorrect + 1;
+    } else {
+      tempWrong = tempWrong + 1;
+    }
+
+    if (thermometer === 15) {
+      tempCorrect = tempCorrect + 1;
+    } else {
+      tempWrong = tempWrong + 1;
+    }
+
+    if (petBrush === 24) {
+      tempCorrect = tempCorrect + 1;
+    } else {
+      tempWrong = tempWrong + 1;
+    }
+
+    if (shoe === 98) {
+      tempCorrect = tempCorrect + 1;
+    } else {
+      tempWrong = tempWrong + 1;
+    }
+
+    if (pen === 62) {
+      tempCorrect = tempCorrect + 1;
+    } else {
+      tempWrong = tempWrong + 1;
+    }
+
+    if (mirror === 82) {
+      tempCorrect = tempCorrect + 1;
+    } else {
+      tempWrong = tempWrong + 1;
+    }
+
+    if (rugbyBall === 74) {
+      tempCorrect = tempCorrect + 1;
+    } else {
+      tempWrong = tempWrong + 1;
+    }
+
+    if (bucket === 73) {
+      tempCorrect = tempCorrect + 1;
+    } else {
+      tempWrong = tempWrong + 1;
+    }
+
+    if (lawBook === 99) {
+      tempCorrect = tempCorrect + 1;
+    } else {
+      tempWrong = tempWrong + 1;
+    }
+
+    if (pin === 30) {
+      tempCorrect = tempCorrect + 1;
+    } else {
+      tempWrong = tempWrong + 1;
+    }
+
+    setCorrect(tempCorrect);
+    setWrong(tempWrong);
+    alert(`Your Score is: ${tempCorrect - tempWrong / 2}
+  And mistakes are: ${tempWrong}
+  Accuracy : ${((tempCorrect - tempWrong / 2) / 24) * 100}%`);
+    window.location = "/home";
+  };
 
   useEffect(() => {
     setTimeout(() => {
@@ -147,7 +266,7 @@ export default function Test62a() {
           </Typography>
         </Grid>
       </Grid>
-      <Typography variant="h4">Picture Number Test</Typography>
+      <Typography variant="h4">Picture Number Test 2</Typography>
 
       <Grid
         container
@@ -164,16 +283,16 @@ export default function Test62a() {
               <Grid item xs={6}>
                 <Box borderRight={1}>
                   <img
-                    src="images/001-dining.png"
-                    alt="chair"
+                    src="images/007-pen.png"
+                    alt="pen"
                     className="home__hero-img"
                   />
                 </Box>
               </Grid>
               <Grid item xs={6}>
                 <TextField
-                  //value={value1}
-                  //onChange={(e) => setValue1(e.target.value)}
+                  value={pen}
+                  onChange={(e) => setPen(e.target.value)}
                   //id="standard-number"
                   //label="Number"
                   //type="number"
@@ -191,16 +310,16 @@ export default function Test62a() {
               <Grid item xs={6}>
                 <Box borderRight={1}>
                   <img
-                    src="images/002-torch.png"
-                    alt="chair"
+                    src="images/012-mirror.png"
+                    alt="mirror"
                     className="home__hero-img"
                   />
                 </Box>
               </Grid>
               <Grid item xs={6}>
                 <TextField
-                  //value={value1}
-                  //onChange={(e) => setValue1(e.target.value)}
+                  value={mirror}
+                  onChange={(e) => setMirror(e.target.value)}
                   //id="standard-number"
                   //label="Number"
                   //type="number"
@@ -218,16 +337,16 @@ export default function Test62a() {
               <Grid item xs={6}>
                 <Box borderRight={1}>
                   <img
-                    src="images/003-boiling.png"
-                    alt="chair"
+                    src="images/017-rugby-ball.png"
+                    alt="Rugby ball"
                     className="home__hero-img"
                   />
                 </Box>
               </Grid>
               <Grid item xs={6}>
                 <TextField
-                  //value={value1}
-                  //onChange={(e) => setValue1(e.target.value)}
+                  value={rugbyBall}
+                  onChange={(e) => setRugbyBall(e.target.value)}
                   //id="standard-number"
                   //label="Number"
                   //type="number"
@@ -245,16 +364,16 @@ export default function Test62a() {
               <Grid item xs={6}>
                 <Box borderRight={1}>
                   <img
-                    src="images/004-rat.png"
-                    alt="chair"
+                    src="images/008-bucket.png"
+                    alt="Bucket"
                     className="home__hero-img"
                   />
                 </Box>
               </Grid>
               <Grid item xs={6}>
                 <TextField
-                  //value={value1}
-                  //onChange={(e) => setValue1(e.target.value)}
+                  value={bucket}
+                  onChange={(e) => setBucket(e.target.value)}
                   //id="standard-number"
                   //label="Number"
                   //type="number"
@@ -272,16 +391,16 @@ export default function Test62a() {
               <Grid item xs={6}>
                 <Box borderRight={1}>
                   <img
-                    src="images/005-coffee-cup.png"
-                    alt="chair"
+                    src="images/013-law-book.png"
+                    alt="Book"
                     className="home__hero-img"
                   />
                 </Box>
               </Grid>
               <Grid item xs={6}>
                 <TextField
-                  //value={value1}
-                  //onChange={(e) => setValue1(e.target.value)}
+                  value={lawBook}
+                  onChange={(e) => setLawBook(e.target.value)}
                   //id="standard-number"
                   //label="Number"
                   //type="number"
@@ -299,16 +418,259 @@ export default function Test62a() {
               <Grid item xs={6}>
                 <Box borderRight={1}>
                   <img
-                    src="images/006-ship.png"
-                    alt="chair"
+                    src="images/018-safety-pin.png"
+                    alt="Safety Pin"
                     className="home__hero-img"
                   />
                 </Box>
               </Grid>
               <Grid item xs={6}>
                 <TextField
-                  //value={value1}
-                  //onChange={(e) => setValue1(e.target.value)}
+                  value={pin}
+                  onChange={(e) => setPin(e.target.value)}
+                  //id="standard-number"
+                  //label="Number"
+                  //type="number"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </Grid>
+            </Grid>
+          </Box>
+        </Grid>
+        <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+          <Box border={1}>
+            <Grid container alignItems="center">
+              <Grid item xs={6}>
+                <Box borderRight={1}>
+                  <img
+                    src="images/009-dog-seating.png"
+                    alt="Dog Seating"
+                    className="home__hero-img"
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  value={dogSeating}
+                  onChange={(e) => setDogSeating(e.target.value)}
+                  //id="standard-number"
+                  //label="Number"
+                  //type="number"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </Grid>
+            </Grid>
+          </Box>
+        </Grid>
+        <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+          <Box border={1}>
+            <Grid container alignItems="center">
+              <Grid item xs={6}>
+                <Box borderRight={1}>
+                  <img
+                    src="images/014-shovel.png"
+                    alt="Shovel"
+                    className="home__hero-img"
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  value={shovel}
+                  onChange={(e) => setShovel(e.target.value)}
+                  //id="standard-number"
+                  //label="Number"
+                  //type="number"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </Grid>
+            </Grid>
+          </Box>
+        </Grid>
+        <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+          <Box border={1}>
+            <Grid container alignItems="center">
+              <Grid item xs={6}>
+                <Box borderRight={1}>
+                  <img
+                    src="images/019-vase.png"
+                    alt="Vase"
+                    className="home__hero-img"
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  value={vase}
+                  onChange={(e) => setVase(e.target.value)}
+                  //id="standard-number"
+                  //label="Number"
+                  //type="number"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </Grid>
+            </Grid>
+          </Box>
+        </Grid>
+        <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+          <Box border={1}>
+            <Grid container alignItems="center">
+              <Grid item xs={6}>
+                <Box borderRight={1}>
+                  <img
+                    src="images/010-screw-driver.png"
+                    alt="Screw Driver"
+                    className="home__hero-img"
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  value={screwDriver}
+                  onChange={(e) => setScrewDriver(e.target.value)}
+                  //id="standard-number"
+                  //label="Number"
+                  //type="number"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </Grid>
+            </Grid>
+          </Box>
+        </Grid>
+        <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+          <Box border={1}>
+            <Grid container alignItems="center">
+              <Grid item xs={6}>
+                <Box borderRight={1}>
+                  <img
+                    src="images/015-thermometer.png"
+                    alt="Thermometer"
+                    className="home__hero-img"
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  value={thermometer}
+                  onChange={(e) => setThermometer(e.target.value)}
+                  //id="standard-number"
+                  //label="Number"
+                  //type="number"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </Grid>
+            </Grid>
+          </Box>
+        </Grid>
+        <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+          <Box border={1}>
+            <Grid container alignItems="center">
+              <Grid item xs={6}>
+                <Box borderRight={1}>
+                  <img
+                    src="images/020-pet-brush.png"
+                    alt="Pet Brush"
+                    className="home__hero-img"
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  value={petBrush}
+                  onChange={(e) => setPetBrush(e.target.value)}
+                  //id="standard-number"
+                  //label="Number"
+                  //type="number"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </Grid>
+            </Grid>
+          </Box>
+        </Grid>
+        <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+          <Box border={1}>
+            <Grid container alignItems="center">
+              <Grid item xs={6}>
+                <Box borderRight={1}>
+                  <img
+                    src="images/011-shoe.png"
+                    alt="Shoe"
+                    className="home__hero-img"
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  //value={shoe}
+                  //onChange={(e) => setShoe(e.target.value)}
+                  //id="standard-number"
+                  //label="Number"
+                  //type="number"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </Grid>
+            </Grid>
+          </Box>
+        </Grid>
+        <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+          <Box border={1}>
+            <Grid container alignItems="center">
+              <Grid item xs={6}>
+                <Box borderRight={1}>
+                  <img
+                    src="images/016-hi.png"
+                    alt="Hand"
+                    className="home__hero-img"
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  value={hi}
+                  onChange={(e) => setHi(e.target.value)}
+                  //id="standard-number"
+                  //label="Number"
+                  //type="number"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </Grid>
+            </Grid>
+          </Box>
+        </Grid>
+        <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+          <Box border={1}>
+            <Grid container alignItems="center">
+              <Grid item xs={6}>
+                <Box borderRight={1}>
+                  <img
+                    src="images/021-iron.png"
+                    alt="Iron"
+                    className="home__hero-img"
+                  />
+                </Box>
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  value={iron}
+                  onChange={(e) => setIron(e.target.value)}
                   //id="standard-number"
                   //label="Number"
                   //type="number"
