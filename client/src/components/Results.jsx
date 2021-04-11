@@ -143,9 +143,10 @@ export default function Results() {
 
   const classes = useStyles();
 
-  if (!data) {
-    return null;
-  }
+  // if (!data) {
+  //   return null;
+  // } else {
+  // }
 
   return (
     <Box
@@ -159,10 +160,41 @@ export default function Results() {
       align="center"
       className={classes.root}
       style={{ background: "#A4D3EE" }}
-      //height="100vh"
+      height="100vh"
       //display="flex"
     >
-      <Typography variant="h4">Tests Results</Typography>
+      <Paper style={{}}>
+        <Grid
+          container
+          spacing={0}
+          alignItems="center"
+          style={{ marginBottom: 25 }}
+        >
+          <Grid
+            item
+            xs={12}
+            // sm={12}
+            // md={10}
+            // lg={10}
+            // xl={10}
+            //align="center"
+            //alignItems="center"
+          >
+            <Typography
+              variant="h4"
+              style={{
+                fontFamily: "fantasy",
+                //alignSelf: "center",
+                //textAlign: "center",
+                //alignContent: "center",
+                //align: "center",
+              }}
+            >
+              Test Results
+            </Typography>
+          </Grid>
+        </Grid>
+      </Paper>
 
       <Grid
         container
@@ -186,7 +218,7 @@ export default function Results() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {data
+              {data.length > 0
                 ? data.map((d, index) => (
                     <StyledTableRow key={index}>
                       <StyledTableCell component="th" scope="row">

@@ -148,7 +148,7 @@ export default function Profile({ onSignup }) {
   return (
     <div
       style={{
-        background: "rgb(148, 228, 247)",
+        background: "#A4D3EE",
         height: "100vh",
         paddingTop: "5%",
         textAlign: "center",

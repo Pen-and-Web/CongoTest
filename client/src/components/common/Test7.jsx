@@ -89,7 +89,7 @@ export default function Test7(props) {
   //   };
 
   const [seconds, setSeconds] = useState(30);
-  const [minutes, setMinutes] = useState(0);
+  const [minutes, setMinutes] = useState(1);
   const [timerBg, setTimerBg] = useState("#3f51b5");
   const [names, setNames] = useState([
     { first: "Claire", second: "Sullivan" },

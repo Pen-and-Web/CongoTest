@@ -162,7 +162,7 @@ export default function Login({ onLogin }) {
   return (
     <div
       style={{
-        background: "rgb(148, 228, 247)",
+        background: "#A4D3EE",
         height: "100vh",
         paddingTop: "5%",
       }}

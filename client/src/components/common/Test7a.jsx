@@ -11,6 +11,11 @@ import TextField from "@material-ui/core/TextField";
 import axios from "axios";
 import Paper from "@material-ui/core/Paper";
 
+import Modal from "@material-ui/core/Modal";
+import Backdrop from "@material-ui/core/Backdrop";
+import Fade from "@material-ui/core/Fade";
+import { Link } from "react-router-dom";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
@@ -40,8 +45,8 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     border: "2px solid #fff",
     // boxShadow: theme.shadows[5],
-    width: "30rem",
-    height: "18rem",
+    width: "20rem",
+    height: "10rem",
 
     padding: theme.spacing(2, 4, 3),
   },
@@ -70,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Test7a(props) {
-  const [seconds, setSeconds] = useState(30);
+  const [seconds, setSeconds] = useState(59);
   const [minutes, setMinutes] = useState(1);
   const [timerBg, setTimerBg] = useState("#3f51b5");
   const [value1, setValue1] = useState("");
@@ -80,8 +85,17 @@ export default function Test7a(props) {
   const [value5, setValue5] = useState("");
   const [value6, setValue6] = useState("");
   const [value7, setValue7] = useState("");
-  // const [correct, setCorrect] = useState(0);
-  // const [wrong, setWrong] = useState(0);
+
+  const [correct, setCorrect] = useState(0);
+  const [wrong, setWrong] = useState(0);
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+    window.location = "/home";
+  };
 
   const result = async () => {
     let correct = 0;
@@ -129,6 +143,9 @@ export default function Test7a(props) {
 
     let result = ((correct - wrong / 2) / 7) * 100;
 
+    setCorrect(correct);
+    setWrong(wrong);
+
     await axios
       .post("http://localhost:3100/api/tests/postResult", {
         userId: `${id.id}`,
@@ -145,11 +162,7 @@ export default function Test7a(props) {
       .catch((error) => {
         console.log(error, "this error");
       });
-
-    alert(`Your Score is: ${correct - wrong / 2}
-And mistakes are: ${wrong}
-Accuracy : ${((correct - wrong / 2) / 7) * 100}%`);
-    window.location = `/home`;
+    handleOpen();
   };
 
   const [seven, setSeven] = useState(null);
@@ -166,27 +179,29 @@ Accuracy : ${((correct - wrong / 2) / 7) * 100}%`);
 
   useEffect(() => {
     setTimeout(() => {
-      if (seconds > 0 && minutes >= 0) {
-        setSeconds(seconds - 1);
-      }
-
-      if (seconds === 0) {
-        if (minutes > 0) {
-          setMinutes(minutes - 1);
-          setSeconds(59);
+      if (!open) {
+        if (seconds > 0 && minutes >= 0) {
+          setSeconds(seconds - 1);
         }
-      }
 
-      if (seconds <= 45 && minutes === 0) {
-        setTimerBg("red");
-      }
+        if (seconds === 0) {
+          if (minutes > 0) {
+            setMinutes(minutes - 1);
+            setSeconds(59);
+          }
+        }
 
-      if (seconds === 0 && minutes === 0) {
-        // history.push({
-        //   pathname: "/home",
-        // });
-        //window.location = `/home`;
-        result();
+        if (seconds <= 45 && minutes === 0) {
+          setTimerBg("red");
+        }
+
+        if (seconds === 0 && minutes === 0) {
+          // history.push({
+          //   pathname: "/home",
+          // });
+          //window.location = `/home`;
+          result();
+        }
       }
     }, 1000);
   }, [seconds]);
@@ -402,6 +417,51 @@ Accuracy : ${((correct - wrong / 2) / 7) * 100}%`);
           </Typography>
         </Grid>
       </Grid>
+
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        className={classes.modal}
+        open={open}
+        onClose={handleClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={open}>
+          <Box
+            style={{
+              textAlign: "center",
+              justifyContent: "center",
+              display: "flex",
+              flexDirection: "column",
+            }}
+            className={classes.paper}
+          >
+            <Typography
+              style={{ fontWeight: "bold" }}
+              id="transition-modal-title"
+            >
+              Accuracy: {((correct - wrong / 2) / 7) * 100}%
+            </Typography>
+            <Typography>
+              Time Taken: {1 - minutes} minutes and {59 - seconds} seconds{" "}
+            </Typography>
+            <Typography id="transition-modal-description">
+              Your Score is: {correct - wrong / 2} and mistakes are: {wrong}
+            </Typography>
+            <Box className={classes.root}>
+              <Link to="/home" className={classes.testLink}>
+                <Button variant="outlined" color="primary">
+                  Okay
+                </Button>
+              </Link>
+            </Box>
+          </Box>
+        </Fade>
+      </Modal>
 
       <Button
         //className={classes.testLink}

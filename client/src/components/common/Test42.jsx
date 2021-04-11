@@ -10,6 +10,11 @@ import NumberButton from "./NumberButton";
 import { MdTimer } from "react-icons/md";
 import axios from "axios";
 
+import Modal from "@material-ui/core/Modal";
+import Backdrop from "@material-ui/core/Backdrop";
+import Fade from "@material-ui/core/Fade";
+import { Link } from "react-router-dom";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
@@ -39,8 +44,8 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     border: "2px solid #fff",
     // boxShadow: theme.shadows[5],
-    width: "30rem",
-    height: "18rem",
+    width: "20rem",
+    height: "10rem",
 
     padding: theme.spacing(2, 4, 3),
   },
@@ -101,6 +106,15 @@ export default function Test42(props) {
   const [shuffle, setShuffle] = useState([]);
   const [selectedValues, setSelectedValues] = useState([]);
 
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+    window.location = "/home";
+  };
+
   const checkSelectedValue = (data, index) => {
     const obj = { id: index, value: data };
     let push = true;
@@ -146,23 +160,25 @@ export default function Test42(props) {
 
   useEffect(() => {
     setTimeout(() => {
-      if (seconds > 0 && minutes >= 0) {
-        setSeconds(seconds - 1);
-      }
-
-      if (seconds === 0) {
-        if (minutes > 0) {
-          setMinutes(minutes - 1);
-          setSeconds(59);
+      if (!open) {
+        if (seconds > 0 && minutes >= 0) {
+          setSeconds(seconds - 1);
         }
-      }
 
-      if (seconds <= 45 && minutes === 0) {
-        setTimerBg("red");
-      }
+        if (seconds === 0) {
+          if (minutes > 0) {
+            setMinutes(minutes - 1);
+            setSeconds(59);
+          }
+        }
 
-      if (seconds === 0 && minutes === 0) {
-        calculateResult();
+        if (seconds <= 45 && minutes === 0) {
+          setTimerBg("red");
+        }
+
+        if (seconds === 0 && minutes === 0) {
+          calculateResult();
+        }
       }
     }, 1000);
   }, [seconds]);
@@ -207,6 +223,9 @@ export default function Test42(props) {
 
     let result = ((tempCorrect - tempWrong / 2) / 22) * 100;
 
+    setCorrect(correct);
+    setWrong(wrong);
+
     await axios
       .post("http://localhost:3100/api/tests/postResult", {
         userId: `${id.id}`,
@@ -223,15 +242,7 @@ export default function Test42(props) {
       .catch((error) => {
         console.log(error, "this error");
       });
-    setCorrect(tempCorrect);
-    setWrong(tempWrong);
-    alert(`Your Score is: ${tempCorrect - tempWrong / 2}
-  And mistakes are: ${tempWrong}
-  Accuracy : ${((tempCorrect - tempWrong / 2) / 16) * 100}%`);
-    //   alert(`Your Score is: ${tempCorrect - tempWrong / 2}
-    // And mistakes are: ${tempWrong}
-    // Accuracy : ${((tempCorrect - tempWrong / 2) / 24) * 100}%`);
-    window.location = "/home";
+    handleOpen();
   };
 
   const classes = useStyles();
@@ -248,7 +259,7 @@ export default function Test42(props) {
       align="center"
       className={classes.root}
       style={{ background: "#A4D3EE" }}
-      //height="100vh"
+      height="100vh"
       //display="flex"
     >
       <Grid
@@ -358,6 +369,51 @@ export default function Test42(props) {
           </Grid>
         ))}
       </Grid>
+
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        className={classes.modal}
+        open={open}
+        onClose={handleClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={open}>
+          <Box
+            style={{
+              textAlign: "center",
+              justifyContent: "center",
+              display: "flex",
+              flexDirection: "column",
+            }}
+            className={classes.paper}
+          >
+            <Typography
+              style={{ fontWeight: "bold" }}
+              id="transition-modal-title"
+            >
+              Accuracy: {((correct - wrong / 2) / 22) * 100}%
+            </Typography>
+            <Typography>
+              Time Taken: {2 - minutes} minutes and {59 - seconds} seconds{" "}
+            </Typography>
+            <Typography id="transition-modal-description">
+              Your Score is: {correct - wrong / 2} and mistakes are: {wrong}
+            </Typography>
+            <Box className={classes.root}>
+              <Link to="/home" className={classes.testLink}>
+                <Button variant="outlined" color="primary">
+                  Okay
+                </Button>
+              </Link>
+            </Box>
+          </Box>
+        </Fade>
+      </Modal>
 
       <Button
         //className={classes.testLink}

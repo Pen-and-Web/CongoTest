@@ -233,7 +233,7 @@ export default function Test4() {
       align="center"
       className={classes.root}
       style={{ background: "#A4D3EE" }}
-      //height="100vh"
+      height="100vh"
       //display="flex"
     >
       <Grid

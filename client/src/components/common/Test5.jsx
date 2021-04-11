@@ -202,7 +202,7 @@ export default function Test5() {
       //alignItems="stretch"
       padding={10}
       // bgcolor="warning.main"
-      //align="center"
+      align="center"
       className={classes.root}
       style={{ background: "#A4D3EE" }}
       height="100vh"

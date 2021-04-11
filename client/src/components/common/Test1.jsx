@@ -47,8 +47,8 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     border: "2px solid #fff",
     // boxShadow: theme.shadows[5],
-    width: "30rem",
-    height: "18rem",
+    width: "20rem",
+    height: "10rem",
 
     padding: theme.spacing(2, 4, 3),
   },
@@ -187,6 +187,7 @@ export default function Test1() {
 
   const [correct, setCorrect] = useState(0);
   const [wrong, setWrong] = useState(0);
+  const [result, setResult] = useState(0);
   const [clicked, setClicked] = useState(0);
   const [seconds, setSeconds] = useState(59);
   const [minutes, setMinutes] = useState(2);
@@ -206,12 +207,13 @@ export default function Test1() {
   //   setOpen(false);
   // };
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
+    window.location = "/home";
   };
 
   const checkSelectedValue = (data, index) => {
@@ -227,7 +229,7 @@ export default function Test1() {
       if (selectedValues.length < 24) {
         selectedValues.push(obj);
       } else {
-        alert("You have aleadry selected 16 numbers");
+        alert("You have already selected 24 values!");
       }
     } else {
       setSelectedValues(newArray);
@@ -259,23 +261,25 @@ export default function Test1() {
 
   useEffect(() => {
     setTimeout(() => {
-      if (seconds > 0 && minutes >= 0) {
-        setSeconds(seconds - 1);
-      }
-
-      if (seconds === 0) {
-        if (minutes > 0) {
-          setMinutes(minutes - 1);
-          setSeconds(59);
+      if (!open) {
+        if (seconds > 0 && minutes >= 0) {
+          setSeconds(seconds - 1);
         }
-      }
 
-      if (seconds <= 45 && minutes === 0) {
-        setTimerBg("red");
-      }
+        if (seconds === 0) {
+          if (minutes > 0) {
+            setMinutes(minutes - 1);
+            setSeconds(59);
+          }
+        }
 
-      if (seconds === 0 && minutes === 0) {
-        calculateResult();
+        if (seconds <= 45 && minutes === 0) {
+          setTimerBg("red");
+        }
+
+        if (seconds === 0 && minutes === 0) {
+          calculateResult();
+        }
       }
     }, 1000);
   }, [seconds]);
@@ -310,7 +314,9 @@ export default function Test1() {
     console.log("ID: ", id.id);
 
     let result = ((tempCorrect - tempWrong / 2) / 24) * 100;
-
+    setResult(result);
+    setCorrect(tempCorrect);
+    setWrong(tempWrong);
     await axios
       .post("http://localhost:3100/api/tests/postResult", {
         userId: `${id.id}`,
@@ -327,46 +333,8 @@ export default function Test1() {
       .catch((error) => {
         console.log(error, "this error");
       });
-    setCorrect(tempCorrect);
-    setWrong(tempWrong);
-    handleOpen();
 
-    //   alert(`Your Score is: ${tempCorrect - tempWrong / 2}
-    // And mistakes are: ${tempWrong}
-    // Accuracy : ${((tempCorrect - tempWrong / 2) / 24) * 100}%`);
-    //   window.location = "/home";
-    // return (
-    //   <Modal
-    //     aria-labelledby="transition-modal-title"
-    //     aria-describedby="transition-modal-description"
-    //     className={classes.modal}
-    //     open={open}
-    //     onClose={handleClose}
-    //     closeAfterTransition
-    //     BackdropComponent={Backdrop}
-    //     BackdropProps={{
-    //       timeout: 500,
-    //     }}
-    //   >
-    //     <Fade in={open}>
-    //       <div className={classes.paper}>
-    //         <h2 id="transition-modal-title">Instructions</h2>
-    //         <p id="transition-modal-description">
-    //           You will be presented with a bunch of 2 digit numbers and you have
-    //           to select the ones that add u to 10, for example no 82 -{">"} 8 +
-    //           2 = 10
-    //         </p>
-    //         <div className={classes.root}>
-    //           <Link to="/home" className={classes.testLink}>
-    //             <Button variant="outlined" color="primary">
-    //               Attempt
-    //             </Button>
-    //           </Link>
-    //         </div>
-    //       </div>
-    //     </Fade>
-    //   </Modal>
-    // );
+    handleOpen();
   };
 
   const classes = useStyles();
@@ -506,21 +474,35 @@ export default function Test1() {
         }}
       >
         <Fade in={open}>
-          <div className={classes.paper}>
-            <h2 id="transition-modal-title">Instructions</h2>
-            <p id="transition-modal-description">
-              `Your Score is: ${correct - wrong / 2}
-              And mistakes are: ${wrong}
-              Accuracy : ${((correct - wrong / 2) / 24) * 100}%`
-            </p>
-            <div className={classes.root}>
+          <Box
+            style={{
+              textAlign: "center",
+              justifyContent: "center",
+              display: "flex",
+              flexDirection: "column",
+            }}
+            className={classes.paper}
+          >
+            <Typography
+              style={{ fontWeight: "bold" }}
+              id="transition-modal-title"
+            >
+              Accuracy: {((correct - wrong / 2) / 24) * 100}%
+            </Typography>
+            <Typography>
+              Time Taken: {2 - minutes} minutes and {59 - seconds} seconds{" "}
+            </Typography>
+            <Typography id="transition-modal-description">
+              Your Score is: {correct - wrong / 2} and mistakes are: {wrong}
+            </Typography>
+            <Box className={classes.root}>
               <Link to="/home" className={classes.testLink}>
                 <Button variant="outlined" color="primary">
-                  Attempt
+                  Okay
                 </Button>
               </Link>
-            </div>
-          </div>
+            </Box>
+          </Box>
         </Fade>
       </Modal>
 
