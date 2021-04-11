@@ -105,6 +105,7 @@ export default function ItemButton(props) {
       }}
       variant={!disabled ? "outlined" : "contained"}
       color="primary"
+      style={{ marginBottom: "2%" }}
     >
       {props.number}
     </Button>

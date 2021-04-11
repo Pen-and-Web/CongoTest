@@ -9,6 +9,7 @@ import { NavLink } from "react-router-dom";
 import ItemButton from "./ItemButton";
 import { MdTimer } from "react-icons/md";
 import Paper from "@material-ui/core/Paper";
+import { GoPrimitiveDot } from "react-icons/go";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -157,10 +158,10 @@ export default function Test7(props) {
       //display="flex"
       //flexDirection="column"
       //alignItems="stretch"
-      padding={10}
+      padding={{ xs: 1, sm: 2, lg: 10, md: 5, xl: 10 }}
       // bgcolor="warning.main"
       align="center"
-      className={classes.root}
+      //className={classes.root}
       style={{ background: "#A4D3EE" }}
       height="100vh"
       //display="flex"
@@ -169,7 +170,7 @@ export default function Test7(props) {
         container
         spacing={0}
         alignItems="center"
-        style={{ marginBottom: 25 }}
+        style={{ marginBottom: "2%" }}
       >
         <Grid item xs={12} sm={8} md={10} lg={10} xl={10}></Grid>
         <Grid
@@ -179,7 +180,7 @@ export default function Test7(props) {
           md={2}
           lg={2}
           xl={2}
-          style={{ paddingLeft: 25, paddingRight: 25 }}
+          //style={{ paddingLeft: "5%", paddingRight: "5%" }}
         >
           <Typography
             style={{
@@ -227,14 +228,14 @@ export default function Test7(props) {
                 //align: "center",
               }}
             >
-              {"   "}
+              {/* {"   "}
               <img
                 src="images/first and last name 1.png"
                 alt="A"
                 className="home__hero-img"
                 style={{ maxWidth: 100, minWidth: 10 }}
               />
-              <br />
+              <br /> */}
               First And Last Name Test
             </Typography>
           </Grid>
@@ -252,7 +253,7 @@ export default function Test7(props) {
       <Grid
         container
         spacing={0}
-        style={{ marginTop: 100 }}
+        style={{ marginTop: "5%" }}
         //direction="row"
         //alignItems="center"
         //justify="center"
@@ -270,7 +271,8 @@ export default function Test7(props) {
             xl={4}
             align="center"
           >
-            <Typography>
+            <Typography style={{ textAlign: "left" }}>
+              <GoPrimitiveDot />
               {seven.first} {seven.second}
             </Typography>
           </Grid>

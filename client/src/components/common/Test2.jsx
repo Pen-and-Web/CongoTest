@@ -143,7 +143,7 @@ export default function Test2(props) {
       if (selectedValues.length < 16) {
         selectedValues.push(obj);
       } else {
-        alert("You have aleadry selected 16 numbers");
+        alert("You have already selected 16 values");
       }
     } else {
       setSelectedValues(newArray);
@@ -151,6 +151,12 @@ export default function Test2(props) {
     console.log(newArray, "array");
     return newArray;
   };
+
+  useEffect(() => {
+    return () => {
+      props.history.push("/home");
+    };
+  }, []);
 
   useEffect(() => {
     setTimeout(() => {
@@ -226,11 +232,13 @@ export default function Test2(props) {
       .post("http://localhost:3100/api/tests/postResult", {
         userId: `${id.id}`,
         testName: "Sum to 10",
-        accuracy: result,
+        accuracy: `${result < 0 ? 0 : result}`,
         minutes: 2 - minutes,
         seconds: 59 - seconds,
         wrong: tempWrong,
-        correct: tempCorrect,
+        correct: `${
+          tempCorrect - tempWrong / 2 < 0 ? 0 : tempCorrect - tempWrong / 2
+        }`,
       })
       .then((response) => {
         console.log("Post Response: ", response);
@@ -264,10 +272,10 @@ export default function Test2(props) {
       //display="flex"
       //flexDirection="column"
       //alignItems="stretch"
-      padding={10}
+      padding={{ xs: 1, sm: 2, lg: 10, md: 5, xl: 10 }}
       // bgcolor="warning.main"
       align="center"
-      className={classes.root}
+      //className={classes.root}
       style={{ background: "#A4D3EE" }}
       height="100vh"
       //display="flex"
@@ -276,7 +284,7 @@ export default function Test2(props) {
         container
         spacing={0}
         alignItems="center"
-        style={{ marginBottom: 25 }}
+        style={{ marginBottom: "2%" }}
       >
         <Grid item xs={12} sm={8} md={10} lg={10} xl={10}></Grid>
         <Grid
@@ -286,7 +294,7 @@ export default function Test2(props) {
           md={2}
           lg={2}
           xl={2}
-          style={{ paddingLeft: 25, paddingRight: 25 }}
+          //style={{ paddingLeft: "5%", paddingRight: "5%" }}
         >
           <Typography
             style={{
@@ -334,14 +342,14 @@ export default function Test2(props) {
                 //align: "center",
               }}
             >
-              {"   "}
+              {/* {"   "}
               <img
                 src="images/sum to 10.png"
                 alt="A"
                 className="home__hero-img"
                 style={{ maxWidth: 100, minWidth: 10 }}
               />
-              <br />
+              <br /> */}
               Sum to 10
             </Typography>
           </Grid>
@@ -351,7 +359,7 @@ export default function Test2(props) {
       <Grid
         container
         spacing={0}
-        style={{ marginTop: 100 }}
+        style={{ marginTop: "5%" }}
         //direction="row"
         //alignItems="center"
         //justify="center"
@@ -361,8 +369,8 @@ export default function Test2(props) {
           <Grid
             key={index}
             item
-            xs={6}
-            sm={6}
+            xs={3}
+            sm={3}
             md={2}
             lg={2}
             sm={2}
@@ -408,13 +416,17 @@ export default function Test2(props) {
               style={{ fontWeight: "bold" }}
               id="transition-modal-title"
             >
-              Accuracy: {((correct - wrong / 2) / 16) * 100}%
+              Accuracy:{" "}
+              {((correct - wrong / 2) / 16) * 100 < 0
+                ? 0
+                : ((correct - wrong / 2) / 16) * 100}
+              %
             </Typography>
             <Typography>
               Time Taken: {2 - minutes} minutes and {59 - seconds} seconds{" "}
             </Typography>
             <Typography id="transition-modal-description">
-              Your Score is: {correct - wrong / 2} and mistakes are: {wrong}
+              Your Score is: {correct - wrong / 2 < 0 ? 0 : correct - wrong / 2}
             </Typography>
             <Box className={classes.root}>
               <Link to="/home" className={classes.testLink}>
@@ -434,6 +446,7 @@ export default function Test2(props) {
         }}
         variant="contained"
         color="#F0F8FF"
+        style={{ marginTop: "5%" }}
       >
         Submit
       </Button>

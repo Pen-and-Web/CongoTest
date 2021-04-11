@@ -77,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Test3() {
+export default function Test3(props) {
   const [seconds, setSeconds] = useState(59);
   const [minutes, setMinutes] = useState(2);
   const [timerBg, setTimerBg] = useState("#3f51b5");
@@ -268,11 +268,11 @@ export default function Test3() {
       .post("http://localhost:3100/api/tests/postResult", {
         userId: `${id.id}`,
         testName: "Cognitive Reflection",
-        accuracy: result,
+        accuracy: `${result < 0 ? 0 : result}`,
         minutes: 3 - minutes,
         seconds: 59 - seconds,
         wrong: wrong,
-        correct: correct,
+        correct: `${correct - wrong / 2 < 0 ? 0 : correct - wrong / 2}`,
       })
       .then((response) => {
         console.log("Post Response: ", response);
@@ -288,6 +288,12 @@ export default function Test3() {
     // Accuracy : ${((correct - wrong / 2) / 6) * 100}%`);
   };
 
+  useEffect(() => {
+    return () => {
+      props.history.push("/home");
+    };
+  }, []);
+
   const classes = useStyles();
 
   return (
@@ -297,10 +303,10 @@ export default function Test3() {
       //display="flex"
       //flexDirection="column"
       //alignItems="stretch"
-      padding={10}
+      padding={{ xs: 1, sm: 2, lg: 10, md: 5, xl: 10 }}
       // bgcolor="warning.main"
       // align="center"
-      className={classes.root}
+      //className={classes.root}
       style={{ background: "#A4D3EE" }}
       height="100vh"
       //display="flex"
@@ -309,7 +315,7 @@ export default function Test3() {
         container
         spacing={0}
         alignItems="center"
-        style={{ marginBottom: 25 }}
+        style={{ marginBottom: "2%" }}
         align="center"
       >
         <Grid item xs={12} sm={8} md={10} lg={10} xl={10}></Grid>
@@ -320,7 +326,7 @@ export default function Test3() {
           md={2}
           lg={2}
           xl={2}
-          style={{ paddingLeft: 25, paddingRight: 25 }}
+          //style={{ paddingLeft: "5%", paddingRight: "5%" }}
         >
           <Typography
             style={{
@@ -370,14 +376,14 @@ export default function Test3() {
                 //align: "center",
               }}
             >
-              {"   "}
+              {/* {"   "}
               <img
                 src="images/crt 2.png"
                 alt="A"
                 className="home__hero-img"
                 style={{ maxWidth: 100, minWidth: 10 }}
               />
-              <br />
+              <br /> */}
               Cognitive Reflection Test (CRT)
             </Typography>
           </Grid>
@@ -387,7 +393,7 @@ export default function Test3() {
       <Grid
         container
         spacing={0}
-        style={{ marginTop: 50 }}
+        style={{ marginTop: "5%" }}
         //direction="row"
         //alignItems="center"
         //justify="center"
@@ -645,13 +651,17 @@ export default function Test3() {
               style={{ fontWeight: "bold" }}
               id="transition-modal-title"
             >
-              Accuracy: {((correct - wrong / 2) / 6) * 100}%
+              Accuracy:{" "}
+              {((correct - wrong / 2) / 6) * 100 < 0
+                ? 0
+                : ((correct - wrong / 2) / 6) * 100}
+              %
             </Typography>
             <Typography>
               Time Taken: {3 - minutes} minutes and {59 - seconds} seconds{" "}
             </Typography>
             <Typography id="transition-modal-description">
-              Your Score is: {correct - wrong / 2} and mistakes are: {wrong}
+              Your Score is: {correct - wrong / 2 < 0 ? 0 : correct - wrong / 2}
             </Typography>
             <Box className={classes.root}>
               <Link to="/home" className={classes.testLink}>
@@ -676,6 +686,7 @@ export default function Test3() {
           //         }}
           variant="contained"
           color="#F0F8FF"
+          style={{ marginTop: "5%" }}
         >
           Submit
         </Button>

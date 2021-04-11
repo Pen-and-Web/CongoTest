@@ -13,6 +13,9 @@ import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
+import Modal from "@material-ui/core/Modal";
+import Backdrop from "@material-ui/core/Backdrop";
+import Fade from "@material-ui/core/Fade";
 
 let theme = createMuiTheme();
 theme = responsiveFontSizes(theme);
@@ -25,15 +28,19 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
   },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: "center",
-    color: theme.palette.text.secondary,
+  modal: {
+    display: "flex",
     alignItems: "center",
-    alignContent: "center",
-    typography: {
-      fontFamily: "Fira Sans",
-    },
+    justifyContent: "center",
+  },
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    border: "2px solid #fff",
+    // boxShadow: theme.shadows[5],
+    width: "30rem",
+    height: "25rem",
+
+    padding: theme.spacing(2, 4, 3),
   },
 }));
 
@@ -51,21 +58,26 @@ export default function TestOneSegment({
   link,
 }) {
   const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <Box
       display="flex"
       flexDirection="column"
       alignItems="stretch"
-      padding={10}
+      padding={{ xs: 1, sm: 2, lg: 10, md: 5, xl: 10 }}
       bgcolor="#A4D3EE"
       className={classes.root}
     >
       <Grid container spacing={0} alignItems="center">
         <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-          {/* <Paper className={classes.paper}> */}
           <Box className="home__hero-text-wrapper">
-            {/* <div className="top-line">{topLine}</div> */}
             <ThemeProvider theme={theme}>
               <Typography
                 style={{ fontFamily: "fantasy" }}
@@ -77,7 +89,7 @@ export default function TestOneSegment({
                 {headline}
               </Typography>
 
-              <Typography
+              {/* <Typography
                 className={
                   lightTextDesc
                     ? "home__hero-subtitle"
@@ -87,22 +99,49 @@ export default function TestOneSegment({
                 style={{ fontFamily: "fantasy" }}
               >
                 {description}
-              </Typography>
-              <Link to={link}>
-                <Button
-                  style={{ marginTop: 10 }}
-                  variant="contained"
-                  color="#F0F8FF"
-                >
-                  {buttonLabel}
-                </Button>
-              </Link>
+              </Typography> */}
+              {/* <Link to={link}> */}
+              <Button
+                onClick={() => {
+                  handleOpen();
+                }}
+                style={{ marginTop: 10 }}
+                variant="contained"
+                color="#F0F8FF"
+              >
+                {buttonLabel}
+              </Button>
+              {/* </Link> */}
             </ThemeProvider>
           </Box>
-          {/* </Paper> */}
         </Grid>
+        <Modal
+          aria-labelledby="transition-modal-title"
+          aria-describedby="transition-modal-description"
+          className={classes.modal}
+          open={open}
+          onClose={handleClose}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <Fade in={open}>
+            <div className={classes.paper}>
+              <h2 id="transition-modal-title">Instructions</h2>
+              <p id="transition-modal-description">{description}</p>
+              <div className={classes.root}>
+                <Link to={link} className={classes.testLink}>
+                  <Button variant="outlined" color="primary">
+                    Continue
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </Fade>
+        </Modal>
         <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-          {/* <Paper className={classes.paper}> */}
           <Box
             //className="home__hero-img-wrapper"
             display="flex"
@@ -110,7 +149,6 @@ export default function TestOneSegment({
           >
             <img src={img} alt={alt} className="home__hero-img" />
           </Box>
-          {/* </Paper> */}
         </Grid>
       </Grid>
     </Box>

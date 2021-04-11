@@ -50,7 +50,7 @@ export const homeObjFour = {
   topLine: "DATA ANALYTICS",
   headline: "Number Comparison Test",
   description:
-    "Please complete the Finding a’s test. Your job is to select all the words that contain the letter a. You have 3 minutes to complete this. Good luck!",
+    "Your task is to compare each pair below and mark them by clicking on them, if they are not identical.Good luck!",
   buttonLabel: "Attempt",
   imgStart: "start",
   img: "images/number comparison 2.png",
@@ -95,7 +95,7 @@ export const homeObjSeven = {
   topLine: "DATA ANALYTICS",
   headline: "First and Last Name Test",
   description:
-    "Each problem in this test has five sets of letters with four letters in each set. Four of the sets of letters are alike in some way. You are to find the rule that makes these four sets alike. The fifth letter set is different from them and will not fit this rule. Draw an X thorugh the set of letters that is different",
+    "You will be given time to memorise names. You will then be taken to a page where you will be given just the first or last name your task is to complete them",
   buttonLabel: "Attempt",
   imgStart: "start",
   img: "images/first and last name 2.png",

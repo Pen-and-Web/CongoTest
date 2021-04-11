@@ -4,7 +4,13 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import { NavLink } from "react-router-dom";
-import { withStyles, makeStyles } from "@material-ui/core/styles";
+import {
+  createMuiTheme,
+  responsiveFontSizes,
+  ThemeProvider,
+  makeStyles,
+  withStyles,
+} from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -15,6 +21,9 @@ import Paper from "@material-ui/core/Paper";
 
 import { MdTimer } from "react-icons/md";
 import axios from "axios";
+
+let theme = createMuiTheme();
+theme = responsiveFontSizes(theme);
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -91,7 +100,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "2px",
   },
   table: {
-    minWidth: 700,
+    minWidth: 340,
   },
 }));
 
@@ -155,10 +164,10 @@ export default function Results() {
       //display="flex"
       //flexDirection="column"
       //alignItems="stretch"
-      padding={10}
+      padding={{ xs: 1, sm: 2, lg: 10, md: 5, xl: 10 }}
       // bgcolor="warning.main"
       align="center"
-      className={classes.root}
+      //className={classes.root}
       style={{ background: "#A4D3EE" }}
       height="100vh"
       //display="flex"
@@ -168,7 +177,7 @@ export default function Results() {
           container
           spacing={0}
           alignItems="center"
-          style={{ marginBottom: 25 }}
+          style={{ marginBottom: "2%" }}
         >
           <Grid
             item
@@ -199,57 +208,56 @@ export default function Results() {
       <Grid
         container
         spacing={0}
-        style={{ marginTop: 100 }}
+        style={{ marginTop: "5%" }}
         //direction="row"
         //alignItems="center"
         //justify="center"
       >
-        <TableContainer component={Paper}>
-          <Table className={classes.table} aria-label="customized table">
-            <TableHead>
-              <TableRow>
-                <StyledTableCell>Test Name</StyledTableCell>
-                <StyledTableCell align="right">Attempt#</StyledTableCell>
-                <StyledTableCell align="right">Accuracy</StyledTableCell>
-                <StyledTableCell align="right">Minutes</StyledTableCell>
-                <StyledTableCell align="right">Seconds</StyledTableCell>
-                <StyledTableCell align="right">Correct</StyledTableCell>
-                <StyledTableCell align="right">Wrong</StyledTableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {data.length > 0
-                ? data.map((d, index) => (
-                    <StyledTableRow key={index}>
-                      <StyledTableCell component="th" scope="row">
-                        {d.testName}
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {d.attempt}
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {d.accuracy}
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {d.minutes}
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {d.seconds}
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {d.correct}
-                      </StyledTableCell>
-                      <StyledTableCell align="right">{d.wrong}</StyledTableCell>
-                    </StyledTableRow>
-                  ))
-                : null}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <ThemeProvider theme={theme}>
+          <Grid item xs={12}>
+            <TableContainer component={Paper}>
+              <Table className={classes.table} aria-label="customized table">
+                <TableHead>
+                  <TableRow>
+                    <StyledTableCell>Test Name</StyledTableCell>
+                    <StyledTableCell align="right">Attempt#</StyledTableCell>
+                    <StyledTableCell align="right">Accuracy</StyledTableCell>
+                    <StyledTableCell align="right">Time</StyledTableCell>
+                    <StyledTableCell align="right">Score</StyledTableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {data.length > 0
+                    ? data.map((d, index) => (
+                        <StyledTableRow key={index}>
+                          <StyledTableCell component="th" scope="row">
+                            {d.testName}
+                          </StyledTableCell>
+                          <StyledTableCell align="right">
+                            {d.attempt}
+                          </StyledTableCell>
+                          <StyledTableCell align="right">
+                            {d.accuracy}
+                          </StyledTableCell>
+                          <StyledTableCell align="right">
+                            {d.minutes} min {d.seconds} sec
+                          </StyledTableCell>
+                          <StyledTableCell align="right">
+                            {d.correct}
+                          </StyledTableCell>
+                        </StyledTableRow>
+                      ))
+                    : null}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Grid>
+        </ThemeProvider>
       </Grid>
 
       <Button
         //className={classes.testLink}
+        style={{ marginTop: "5%" }}
         onClick={() => {
           deleteResults();
         }}

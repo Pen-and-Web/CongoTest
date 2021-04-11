@@ -86,6 +86,12 @@ export default function Test7a(props) {
   const [value6, setValue6] = useState("");
   const [value7, setValue7] = useState("");
 
+  useEffect(() => {
+    return () => {
+      props.history.push("/home");
+    };
+  }, []);
+
   const [correct, setCorrect] = useState(0);
   const [wrong, setWrong] = useState(0);
   const [open, setOpen] = useState(false);
@@ -150,11 +156,11 @@ export default function Test7a(props) {
       .post("http://localhost:3100/api/tests/postResult", {
         userId: `${id.id}`,
         testName: "First and Last name",
-        accuracy: result,
+        accuracy: `${result < 0 ? 0 : result}`,
         minutes: 3 - minutes,
         seconds: 59 - seconds,
         wrong: wrong,
-        correct: correct,
+        correct: `${correct - wrong / 2 < 0 ? 0 : correct - wrong / 2}`,
       })
       .then((response) => {
         console.log("Post Response: ", response);
@@ -219,10 +225,10 @@ export default function Test7a(props) {
       //display="flex"
       //flexDirection="column"
       //alignItems="stretch"
-      padding={10}
+      padding={{ xs: 1, sm: 2, lg: 10, md: 5, xl: 10 }}
       // bgcolor="warning.main"
       align="center"
-      className={classes.root}
+      //className={classes.root}
       style={{ background: "#A4D3EE" }}
       height="100vh"
       //display="flex"
@@ -231,7 +237,7 @@ export default function Test7a(props) {
         container
         spacing={0}
         alignItems="center"
-        style={{ marginBottom: 25 }}
+        style={{ marginBottom: "2%" }}
       >
         <Grid item xs={12} sm={8} md={10} lg={10} xl={10}></Grid>
         <Grid
@@ -241,7 +247,7 @@ export default function Test7a(props) {
           md={2}
           lg={2}
           xl={2}
-          style={{ paddingLeft: 25, paddingRight: 25 }}
+          //style={{ paddingLeft: "5%", paddingRight: "5%" }}
         >
           <Typography
             style={{
@@ -289,14 +295,14 @@ export default function Test7a(props) {
                 //align: "center",
               }}
             >
-              {"   "}
+              {/* {"   "}
               <img
                 src="images/first and last name 1.png"
                 alt="A"
                 className="home__hero-img"
                 style={{ maxWidth: 100, minWidth: 10 }}
               />
-              <br />
+              <br /> */}
               Time to guess ..
             </Typography>
           </Grid>
@@ -306,12 +312,12 @@ export default function Test7a(props) {
       <Grid
         container
         spacing={0}
-        style={{ marginTop: 100 }}
+        style={{ marginTop: "5%" }}
         //direction="row"
         //alignItems="center"
         //justify="center"
       >
-        <Grid item xs={6} align="center">
+        <Grid item xs={12} align="center">
           <Typography>
             <TextField
               value={value1}
@@ -326,7 +332,7 @@ export default function Test7a(props) {
             {seven[0].second}
           </Typography>
         </Grid>
-        <Grid item xs={6} align="center">
+        <Grid item xs={12} align="center">
           <Typography>
             <TextField
               value={value2}
@@ -341,7 +347,7 @@ export default function Test7a(props) {
             {seven[1].second}
           </Typography>
         </Grid>
-        <Grid item xs={6} align="center">
+        <Grid item xs={12} align="center">
           <Typography>
             <TextField
               value={value3}
@@ -356,7 +362,7 @@ export default function Test7a(props) {
             {seven[2].second}
           </Typography>
         </Grid>
-        <Grid item xs={6} align="center">
+        <Grid item xs={12} align="center">
           <Typography>
             <TextField
               value={value4}
@@ -371,7 +377,7 @@ export default function Test7a(props) {
             {seven[3].second}
           </Typography>
         </Grid>
-        <Grid item xs={6} align="center">
+        <Grid item xs={12} align="center">
           <Typography>
             <TextField
               value={value5}
@@ -386,7 +392,7 @@ export default function Test7a(props) {
             {seven[4].second}
           </Typography>
         </Grid>
-        <Grid item xs={6} align="center">
+        <Grid item xs={12} align="center">
           <Typography>
             <TextField
               value={value6}
@@ -401,7 +407,7 @@ export default function Test7a(props) {
             {seven[5].second}
           </Typography>
         </Grid>
-        <Grid item xs={6} align="center">
+        <Grid item xs={12} align="center">
           <Typography>
             <TextField
               value={value7}
@@ -444,13 +450,17 @@ export default function Test7a(props) {
               style={{ fontWeight: "bold" }}
               id="transition-modal-title"
             >
-              Accuracy: {((correct - wrong / 2) / 7) * 100}%
+              Accuracy:{" "}
+              {((correct - wrong / 2) / 7) * 100 < 0
+                ? 0
+                : ((correct - wrong / 2) / 7) * 100}
+              %
             </Typography>
             <Typography>
               Time Taken: {1 - minutes} minutes and {59 - seconds} seconds{" "}
             </Typography>
             <Typography id="transition-modal-description">
-              Your Score is: {correct - wrong / 2} and mistakes are: {wrong}
+              Your Score is: {correct - wrong / 2 < 0 ? 0 : correct - wrong / 2}
             </Typography>
             <Box className={classes.root}>
               <Link to="/home" className={classes.testLink}>
@@ -470,6 +480,7 @@ export default function Test7a(props) {
         }}
         variant="contained"
         color="#F0F8FF"
+        style={{ marginTop: "5%" }}
       >
         Submit
       </Button>

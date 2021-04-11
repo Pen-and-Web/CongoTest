@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Test4() {
+export default function Test4(props) {
   let history = useHistory();
   const [words, setWords] = useState([
     "659:659",
@@ -221,6 +221,12 @@ export default function Test4() {
 
   const classes = useStyles();
 
+  // useEffect(() => {
+  //   return () => {
+  //     props.history.push("/home");
+  //   };
+  // }, []);
+
   return (
     <Box
       justifyContent="center"
@@ -228,10 +234,10 @@ export default function Test4() {
       //display="flex"
       //flexDirection="column"
       //alignItems="stretch"
-      padding={10}
+      padding={{ xs: 1, sm: 2, lg: 10, md: 5, xl: 10 }}
       // bgcolor="warning.main"
       align="center"
-      className={classes.root}
+      //className={classes.root}
       style={{ background: "#A4D3EE" }}
       height="100vh"
       //display="flex"
@@ -240,7 +246,7 @@ export default function Test4() {
         container
         spacing={0}
         alignItems="center"
-        style={{ marginBottom: 25 }}
+        style={{ marginBottom: "2%" }}
       >
         <Grid item xs={12} sm={8} md={10} lg={10} xl={10}></Grid>
         <Grid
@@ -250,7 +256,7 @@ export default function Test4() {
           md={2}
           lg={2}
           xl={2}
-          style={{ paddingLeft: 25, paddingRight: 25 }}
+          //style={{ paddingLeft: "5%", paddingRight: "5%" }}
         >
           <Typography
             style={{
@@ -298,14 +304,14 @@ export default function Test4() {
                 //align: "center",
               }}
             >
-              {"   "}
+              {/* {"   "}
               <img
                 src="images/number comparison.png"
                 alt="A"
                 className="home__hero-img"
                 style={{ maxWidth: 100, minWidth: 10 }}
               />
-              <br />
+              <br /> */}
               Number Comparison Test (1)
             </Typography>
           </Grid>
@@ -315,7 +321,7 @@ export default function Test4() {
       <Grid
         container
         spacing={0}
-        style={{ marginTop: 100 }}
+        style={{ marginTop: "5%" }}
         //direction="row"
         //alignItems="center"
         //justify="center"
@@ -326,9 +332,9 @@ export default function Test4() {
             item
             xs={12}
             sm={6}
-            md={2}
-            lg={2}
-            xl={2}
+            md={3}
+            lg={3}
+            xl={3}
             align="center"
           >
             <NumberButton
@@ -351,6 +357,7 @@ export default function Test4() {
         }}
         variant="contained"
         color="#F0F8FF"
+        style={{ marginTop: "5%" }}
       >
         Submit
       </Button>

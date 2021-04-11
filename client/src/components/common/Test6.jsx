@@ -113,10 +113,10 @@ export default function Test6() {
       //display="flex"
       //flexDirection="column"
       //alignItems="stretch"
-      padding={10}
+      padding={{ xs: 1, sm: 2, lg: 10, md: 5, xl: 10 }}
       // bgcolor="warning.main"
       align="center"
-      className={classes.root}
+      //className={classes.root}
       style={{ background: "#A4D3EE" }}
       height="100vh"
       //display="flex"
@@ -125,7 +125,7 @@ export default function Test6() {
         container
         spacing={0}
         alignItems="center"
-        style={{ marginBottom: 25 }}
+        style={{ marginBottom: "2%" }}
       >
         <Grid item xs={12} sm={8} md={10} lg={10} xl={10}></Grid>
         <Grid
@@ -135,7 +135,7 @@ export default function Test6() {
           md={2}
           lg={2}
           xl={2}
-          style={{ paddingLeft: 25, paddingRight: 25 }}
+          //style={{ paddingLeft: "5%", paddingRight: "5%" }}
         >
           <Typography
             style={{
@@ -183,14 +183,14 @@ export default function Test6() {
                 //align: "center",
               }}
             >
-              {"   "}
+              {/* {"   "}
               <img
                 src="images/picture comparison.png"
                 alt="A"
                 className="home__hero-img"
                 style={{ maxWidth: 100, minWidth: 10 }}
               />
-              <br />
+              <br /> */}
               Picture Number Test (1)
             </Typography>
           </Grid>
@@ -200,7 +200,7 @@ export default function Test6() {
       <Grid
         container
         spacing={1}
-        style={{ marginTop: 50 }}
+        style={{ marginTop: "5%" }}
         align="center"
         //direction="row"
         //alignItems="center"

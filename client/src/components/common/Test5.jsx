@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import {
+  createMuiTheme,
+  responsiveFontSizes,
+  ThemeProvider,
+  makeStyles,
+} from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
@@ -13,6 +18,9 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import Checkbox from "@material-ui/core/Checkbox";
 import Paper from "@material-ui/core/Paper";
 import { useHistory } from "react-router-dom";
+
+let theme = createMuiTheme();
+theme = responsiveFontSizes(theme);
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -72,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Test5() {
+export default function Test5(props) {
   let history = useHistory();
   const [seconds, setSeconds] = useState(59);
   const [minutes, setMinutes] = useState(1);
@@ -200,10 +208,10 @@ export default function Test5() {
       //display="flex"
       //flexDirection="column"
       //alignItems="stretch"
-      padding={10}
+      padding={{ xs: 1, sm: 2, lg: 10, md: 5, xl: 10 }}
       // bgcolor="warning.main"
       align="center"
-      className={classes.root}
+      //className={classes.root}
       style={{ background: "#A4D3EE" }}
       height="100vh"
       //display="flex"
@@ -212,7 +220,7 @@ export default function Test5() {
         container
         spacing={0}
         alignItems="center"
-        style={{ marginBottom: 25 }}
+        style={{ marginBottom: "2%" }}
       >
         <Grid item xs={12} sm={8} md={10} lg={10} xl={10}></Grid>
         <Grid
@@ -222,7 +230,7 @@ export default function Test5() {
           md={2}
           lg={2}
           xl={2}
-          style={{ paddingLeft: 25, paddingRight: 25 }}
+          //style={{ paddingLeft: "5%", paddingRight: "5%" }}
         >
           <Typography
             style={{
@@ -271,14 +279,14 @@ export default function Test5() {
                 //align: "center",
               }}
             >
-              {"   "}
+              {/* {"   "}
               <img
                 src="images/letter sets.png"
                 alt="A"
                 className="home__hero-img"
                 style={{ maxWidth: 100, minWidth: 10 }}
               />
-              <br />
+              <br /> */}
               Letter Sets Test (1)
             </Typography>
           </Grid>
@@ -288,7 +296,7 @@ export default function Test5() {
       <Grid
         container
         spacing={1}
-        style={{ marginTop: 50 }}
+        style={{ marginTop: "5%" }}
         align="center"
         //direction="row"
         //alignItems="center"
@@ -1052,6 +1060,7 @@ export default function Test5() {
         }}
         variant="contained"
         color="#F0F8FF"
+        style={{ marginTop: "5%" }}
       >
         Submit
       </Button>
