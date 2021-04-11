@@ -3,6 +3,8 @@ import { NavLink } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
+import "../TestOne.css";
+// import "../App.css";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -10,11 +12,11 @@ const useStyles = makeStyles((theme) => ({
   },
 
   title: {
-    flexGrow: 2,
+    flexGrow: 1,
     textDecoration: "none",
     color: "#fff",
     textAlign: "start",
-    marginLeft: "20px",
+    marginLeft: "5px",
   },
   link: {
     margin: "0 10px",
@@ -31,7 +33,13 @@ export default function Navbar({ user, onLogout }) {
       <AppBar position="static" style={{ background: "#6CA6CD" }}>
         <Toolbar color="#6CA6CD">
           <NavLink color="inherit" to="/" className={classes.title}>
-            The Test
+            {/* //The Test */}
+            <img
+              src="images/cover.png"
+              alt="chair"
+              className="home__hero-img"
+              style={{ maxWidth: 180, minWidth: 10 }}
+            />
           </NavLink>
 
           {!user && (

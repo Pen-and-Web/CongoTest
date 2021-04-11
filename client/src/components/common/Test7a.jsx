@@ -9,6 +9,7 @@ import ItemButton from "./ItemButton";
 import { MdTimer } from "react-icons/md";
 import TextField from "@material-ui/core/TextField";
 import axios from "axios";
+import Paper from "@material-ui/core/Paper";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -148,6 +149,7 @@ export default function Test7a(props) {
     alert(`Your Score is: ${correct - wrong / 2}
 And mistakes are: ${wrong}
 Accuracy : ${((correct - wrong / 2) / 7) * 100}%`);
+    window.location = `/home`;
   };
 
   const [seven, setSeven] = useState(null);
@@ -178,6 +180,14 @@ Accuracy : ${((correct - wrong / 2) / 7) * 100}%`);
       if (seconds <= 45 && minutes === 0) {
         setTimerBg("red");
       }
+
+      if (seconds === 0 && minutes === 0) {
+        // history.push({
+        //   pathname: "/home",
+        // });
+        //window.location = `/home`;
+        result();
+      }
     }, 1000);
   }, [seconds]);
 
@@ -198,7 +208,7 @@ Accuracy : ${((correct - wrong / 2) / 7) * 100}%`);
       // bgcolor="warning.main"
       align="center"
       className={classes.root}
-      style={{ background: "#94e4f7" }}
+      style={{ background: "#A4D3EE" }}
       height="100vh"
       //display="flex"
     >
@@ -208,11 +218,11 @@ Accuracy : ${((correct - wrong / 2) / 7) * 100}%`);
         alignItems="center"
         style={{ marginBottom: 25 }}
       >
-        <Grid item xs={0} sm={0} md={10} lg={10} xl={10}></Grid>
+        <Grid item xs={12} sm={8} md={10} lg={10} xl={10}></Grid>
         <Grid
           item
           xs={12}
-          sm={12}
+          sm={4}
           md={2}
           lg={2}
           xl={2}
@@ -229,6 +239,7 @@ Accuracy : ${((correct - wrong / 2) / 7) * 100}%`);
               align: "center",
               borderRadius: 5,
               fontSize: 25,
+              marginBottom: 5,
             }}
           >
             <MdTimer /> {minutes}:{seconds < 10 ? 0 : null}
@@ -236,7 +247,46 @@ Accuracy : ${((correct - wrong / 2) / 7) * 100}%`);
           </Typography>
         </Grid>
       </Grid>
-      <Typography variant="h4">First and Last name Test</Typography>
+      <Paper style={{}}>
+        <Grid
+          container
+          spacing={0}
+          alignItems="center"
+          style={{ marginBottom: 25 }}
+        >
+          <Grid
+            item
+            xs={12}
+            // sm={12}
+            // md={10}
+            // lg={10}
+            // xl={10}
+            //align="center"
+            //alignItems="center"
+          >
+            <Typography
+              variant="h4"
+              style={{
+                fontFamily: "fantasy",
+                //alignSelf: "center",
+                //textAlign: "center",
+                //alignContent: "center",
+                //align: "center",
+              }}
+            >
+              {"   "}
+              <img
+                src="images/first and last name 1.png"
+                alt="A"
+                className="home__hero-img"
+                style={{ maxWidth: 100, minWidth: 10 }}
+              />
+              <br />
+              Time to guess ..
+            </Typography>
+          </Grid>
+        </Grid>
+      </Paper>
 
       <Grid
         container

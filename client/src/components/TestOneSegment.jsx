@@ -68,6 +68,7 @@ export default function TestOneSegment({
             {/* <div className="top-line">{topLine}</div> */}
             <ThemeProvider theme={theme}>
               <Typography
+                style={{ fontFamily: "fantasy" }}
                 //className="App"
                 variant="h2"
                 className={lightText ? "heading" : "heading dark"}
@@ -83,11 +84,16 @@ export default function TestOneSegment({
                     : "home__hero-subtitle dark"
                 }
                 classes={{}}
+                style={{ fontFamily: "fantasy" }}
               >
                 {description}
               </Typography>
               <Link to={link}>
-                <Button variant="contained" color="#F0F8FF">
+                <Button
+                  style={{ marginTop: 10 }}
+                  variant="contained"
+                  color="#F0F8FF"
+                >
                   {buttonLabel}
                 </Button>
               </Link>

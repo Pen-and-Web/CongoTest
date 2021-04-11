@@ -3,11 +3,20 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
+import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
 import { NavLink } from "react-router-dom";
 import Abutton from "./Abutton";
 import { MdTimer } from "react-icons/md";
 import axios from "axios";
+
+import Modal from "@material-ui/core/Modal";
+import Backdrop from "@material-ui/core/Backdrop";
+import Fade from "@material-ui/core/Fade";
+import { Link } from "react-router-dom";
+
+// import Snackbar from "@material-ui/core/Snackbar";
+// import MuiAlert from "@material-ui/lab/Alert";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -185,6 +194,26 @@ export default function Test1() {
   const [shuffle, setShuffle] = useState([]);
   const [selectedValues, setSelectedValues] = useState([]);
 
+  // function Alert(props) {
+  //   return <MuiAlert elevation={6} variant="filled" {...props} />;
+  // }
+
+  // const handleClose = (event, reason) => {
+  //   if (reason === "clickaway") {
+  //     return;
+  //   }
+
+  //   setOpen(false);
+  // };
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const checkSelectedValue = (data, index) => {
     const obj = { id: index, value: data };
     let push = true;
@@ -261,6 +290,10 @@ export default function Test1() {
     }
   };
 
+  const handleClick = () => {
+    setOpen(true);
+  };
+
   const calculateResult = async () => {
     let tempCorrect = 0;
     let tempWrong = 0;
@@ -296,10 +329,44 @@ export default function Test1() {
       });
     setCorrect(tempCorrect);
     setWrong(tempWrong);
-    alert(`Your Score is: ${tempCorrect - tempWrong / 2}
-  And mistakes are: ${tempWrong}
-  Accuracy : ${((tempCorrect - tempWrong / 2) / 24) * 100}%`);
-    window.location = "/home";
+    handleOpen();
+
+    //   alert(`Your Score is: ${tempCorrect - tempWrong / 2}
+    // And mistakes are: ${tempWrong}
+    // Accuracy : ${((tempCorrect - tempWrong / 2) / 24) * 100}%`);
+    //   window.location = "/home";
+    // return (
+    //   <Modal
+    //     aria-labelledby="transition-modal-title"
+    //     aria-describedby="transition-modal-description"
+    //     className={classes.modal}
+    //     open={open}
+    //     onClose={handleClose}
+    //     closeAfterTransition
+    //     BackdropComponent={Backdrop}
+    //     BackdropProps={{
+    //       timeout: 500,
+    //     }}
+    //   >
+    //     <Fade in={open}>
+    //       <div className={classes.paper}>
+    //         <h2 id="transition-modal-title">Instructions</h2>
+    //         <p id="transition-modal-description">
+    //           You will be presented with a bunch of 2 digit numbers and you have
+    //           to select the ones that add u to 10, for example no 82 -{">"} 8 +
+    //           2 = 10
+    //         </p>
+    //         <div className={classes.root}>
+    //           <Link to="/home" className={classes.testLink}>
+    //             <Button variant="outlined" color="primary">
+    //               Attempt
+    //             </Button>
+    //           </Link>
+    //         </div>
+    //       </div>
+    //     </Fade>
+    //   </Modal>
+    // );
   };
 
   const classes = useStyles();
@@ -315,7 +382,7 @@ export default function Test1() {
       // bgcolor="warning.main"
       align="center"
       className={classes.root}
-      style={{ background: "#94e4f7" }}
+      style={{ background: "#A4D3EE" }}
       //height="100vh"
       //display="flex"
     >
@@ -325,11 +392,11 @@ export default function Test1() {
         alignItems="center"
         style={{ marginBottom: 25 }}
       >
-        <Grid item xs={0} sm={0} md={10} lg={10} xl={10}></Grid>
+        <Grid item xs={12} sm={8} md={10} lg={10} xl={10}></Grid>
         <Grid
           item
           xs={12}
-          sm={12}
+          sm={4}
           md={2}
           lg={2}
           xl={2}
@@ -346,6 +413,7 @@ export default function Test1() {
               align: "center",
               borderRadius: 5,
               fontSize: 25,
+              marginBottom: 5,
             }}
           >
             <MdTimer /> {minutes}:{seconds < 10 ? 0 : null}
@@ -353,8 +421,46 @@ export default function Test1() {
           </Typography>
         </Grid>
       </Grid>
-      <Typography variant="h4">Finding A's Test</Typography>
-
+      <Paper style={{}}>
+        <Grid
+          container
+          spacing={0}
+          alignItems="center"
+          style={{ marginBottom: 25 }}
+        >
+          <Grid
+            item
+            xs={12}
+            // sm={12}
+            // md={10}
+            // lg={10}
+            // xl={10}
+            //align="center"
+            //alignItems="center"
+          >
+            <Typography
+              variant="h4"
+              style={{
+                fontFamily: "fantasy",
+                //alignSelf: "center",
+                //textAlign: "center",
+                //alignContent: "center",
+                //align: "center",
+              }}
+            >
+              {"   "}
+              <img
+                src="images/finding a's2.png"
+                alt="A"
+                className="home__hero-img"
+                style={{ maxWidth: 100, minWidth: 10 }}
+              />
+              <br />
+              Finding A's Test
+            </Typography>
+          </Grid>
+        </Grid>
+      </Paper>
       <Grid
         container
         spacing={0}
@@ -386,6 +492,37 @@ export default function Test1() {
           </Grid>
         ))}
       </Grid>
+
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        className={classes.modal}
+        open={open}
+        onClose={handleClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={open}>
+          <div className={classes.paper}>
+            <h2 id="transition-modal-title">Instructions</h2>
+            <p id="transition-modal-description">
+              `Your Score is: ${correct - wrong / 2}
+              And mistakes are: ${wrong}
+              Accuracy : ${((correct - wrong / 2) / 24) * 100}%`
+            </p>
+            <div className={classes.root}>
+              <Link to="/home" className={classes.testLink}>
+                <Button variant="outlined" color="primary">
+                  Attempt
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </Fade>
+      </Modal>
 
       <Button
         //className={classes.testLink}

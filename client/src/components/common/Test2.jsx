@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
+import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
 import { NavLink } from "react-router-dom";
 import ItemButton from "./ItemButton";
@@ -90,8 +91,8 @@ export default function Test2(props) {
   const [correct, setCorrect] = useState(0);
   const [wrong, setWrong] = useState(0);
   const [clicked, setClicked] = useState(0);
-  const [seconds, setSeconds] = useState(30);
-  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(59);
+  const [minutes, setMinutes] = useState(3);
   const [selectedValues, setSelectedValues] = useState([]);
   const [timerBg, setTimerBg] = useState("#3f51b5");
   const [userId, setUserId] = useState();
@@ -253,7 +254,7 @@ export default function Test2(props) {
       // bgcolor="warning.main"
       align="center"
       className={classes.root}
-      style={{ background: "#94e4f7" }}
+      style={{ background: "#A4D3EE" }}
       height="100vh"
       //display="flex"
     >
@@ -263,11 +264,11 @@ export default function Test2(props) {
         alignItems="center"
         style={{ marginBottom: 25 }}
       >
-        <Grid item xs={0} sm={0} md={10} lg={10} xl={10}></Grid>
+        <Grid item xs={12} sm={8} md={10} lg={10} xl={10}></Grid>
         <Grid
           item
           xs={12}
-          sm={12}
+          sm={4}
           md={2}
           lg={2}
           xl={2}
@@ -284,6 +285,7 @@ export default function Test2(props) {
               align: "center",
               borderRadius: 5,
               fontSize: 25,
+              marginBottom: 5,
             }}
           >
             <MdTimer /> {minutes}:{seconds < 10 ? 0 : null}
@@ -291,7 +293,46 @@ export default function Test2(props) {
           </Typography>
         </Grid>
       </Grid>
-      <Typography variant="h4">Sum to 10</Typography>
+      <Paper style={{}}>
+        <Grid
+          container
+          spacing={0}
+          alignItems="center"
+          style={{ marginBottom: 25 }}
+        >
+          <Grid
+            item
+            xs={12}
+            // sm={12}
+            // md={10}
+            // lg={10}
+            // xl={10}
+            //align="center"
+            //alignItems="center"
+          >
+            <Typography
+              variant="h4"
+              style={{
+                fontFamily: "fantasy",
+                //alignSelf: "center",
+                //textAlign: "center",
+                //alignContent: "center",
+                //align: "center",
+              }}
+            >
+              {"   "}
+              <img
+                src="images/sum to 10.png"
+                alt="A"
+                className="home__hero-img"
+                style={{ maxWidth: 100, minWidth: 10 }}
+              />
+              <br />
+              Sum to 10
+            </Typography>
+          </Grid>
+        </Grid>
+      </Paper>
 
       <Grid
         container

@@ -6,6 +6,7 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Box from "@material-ui/core/Box";
 import { NavLink } from "react-router-dom";
+import Paper from "@material-ui/core/Paper";
 import Abutton from "./Abutton";
 import { MdTimer } from "react-icons/md";
 import { GoPrimitiveDot } from "react-icons/go";
@@ -132,7 +133,7 @@ export default function Test52() {
 
       if (seconds === 0 && minutes === 0) {
         history.push({
-          pathname: "/Test52",
+          pathname: "/home",
         });
         // window.location = `/Test7a?seven=${seven}`;
       }
@@ -218,21 +219,21 @@ export default function Test52() {
       // bgcolor="warning.main"
       //align="center"
       className={classes.root}
-      style={{ background: "#94e4f7" }}
+      style={{ background: "#A4D3EE" }}
       height="100vh"
       //display="flex"
     >
       <Grid
         container
         spacing={0}
-        //alignItems="center"
+        alignItems="center"
         style={{ marginBottom: 25 }}
       >
-        <Grid item xs={0} sm={0} md={10} lg={10} xl={10}></Grid>
+        <Grid item xs={12} sm={8} md={10} lg={10} xl={10}></Grid>
         <Grid
           item
           xs={12}
-          sm={12}
+          sm={4}
           md={2}
           lg={2}
           xl={2}
@@ -249,6 +250,7 @@ export default function Test52() {
               align: "center",
               borderRadius: 5,
               fontSize: 25,
+              marginBottom: 5,
             }}
           >
             <MdTimer /> {minutes}:{seconds < 10 ? 0 : null}
@@ -256,7 +258,47 @@ export default function Test52() {
           </Typography>
         </Grid>
       </Grid>
-      <Typography variant="h4">Letter Sets Test Part 2</Typography>
+      <Paper style={{}}>
+        <Grid
+          container
+          spacing={0}
+          alignItems="center"
+          align="center"
+          style={{ marginBottom: 25 }}
+        >
+          <Grid
+            item
+            xs={12}
+            // sm={12}
+            // md={10}
+            // lg={10}
+            // xl={10}
+            //align="center"
+            //alignItems="center"
+          >
+            <Typography
+              variant="h4"
+              style={{
+                fontFamily: "fantasy",
+                //alignSelf: "center",
+                //textAlign: "center",
+                //alignContent: "center",
+                //align: "center",
+              }}
+            >
+              {"   "}
+              <img
+                src="images/letter sets.png"
+                alt="A"
+                className="home__hero-img"
+                style={{ maxWidth: 100, minWidth: 10 }}
+              />
+              <br />
+              Letter Sets Test (2)
+            </Typography>
+          </Grid>
+        </Grid>
+      </Paper>
 
       <Grid
         container

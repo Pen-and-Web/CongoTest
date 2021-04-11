@@ -158,7 +158,7 @@ export default function Results() {
       // bgcolor="warning.main"
       align="center"
       className={classes.root}
-      style={{ background: "#94e4f7" }}
+      style={{ background: "#A4D3EE" }}
       //height="100vh"
       //display="flex"
     >

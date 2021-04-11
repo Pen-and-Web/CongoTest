@@ -75,6 +75,7 @@ export default function TestTwoSegment({
             {/* <div className="top-line">{topLine}</div> */}
             <ThemeProvider theme={theme}>
               <Typography
+                style={{ fontFamily: "fantasy" }}
                 // className="App"
                 variant="h2"
                 className={lightText ? "heading" : "heading dark"}
@@ -87,11 +88,16 @@ export default function TestTwoSegment({
                     ? "home__hero-subtitle"
                     : "home__hero-subtitle dark"
                 }
+                style={{ fontFamily: "fantasy" }}
               >
                 {description}
               </Typography>
               <Link to={link}>
-                <Button variant="contained" color="#F0F8FF">
+                <Button
+                  style={{ marginTop: 5 }}
+                  variant="contained"
+                  color="#F0F8FF"
+                >
                   {buttonLabel}
                 </Button>
               </Link>
