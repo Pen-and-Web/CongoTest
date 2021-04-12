@@ -191,9 +191,7 @@ export default function Test5(props) {
       }
 
       if (seconds === 0 && minutes === 0) {
-        history.push({
-          pathname: "/Test52",
-        });
+        calculateResult();
         // window.location = `/Test7a?seven=${seven}`;
       }
     }, 1000);

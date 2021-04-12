@@ -222,7 +222,7 @@ export default function Test62a(props) {
         userId: `${id.id}`,
         testName: "Picture Number",
         accuracy: `${result < 0 ? 0 : result}`,
-        minutes: 2 - minutes,
+        minutes: 2 - (minutes + previous.minutes),
         seconds: 59 - seconds,
         wrong: tempWrong,
         correct: `${
@@ -814,7 +814,8 @@ export default function Test62a(props) {
               %
             </Typography>
             <Typography>
-              Time Taken: {2 - minutes} minutes and {59 - seconds} seconds{" "}
+              Time Taken: {2 - (minutes + props.history.location.state.minutes)}{" "}
+              minutes and {59 - seconds} seconds{" "}
             </Typography>
             <Typography id="transition-modal-description">
               Your Score is: {correct - wrong / 2 < 0 ? 0 : correct - wrong / 2}

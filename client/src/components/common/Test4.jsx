@@ -207,8 +207,8 @@ export default function Test4(props) {
     history.push({
       pathname: "/Test42",
       state: {
-        minutes: minutes,
-        seconds: seconds,
+        minutes: 1 - minutes,
+        seconds: 59 - seconds,
         wrong: tempWrong,
         correct: tempCorrect,
       },

@@ -163,8 +163,10 @@ export default function Test52(props) {
   }, [seconds]);
 
   const calculateResult = async () => {
-    let tempCorrect = 0;
-    let tempWrong = 0;
+    let previous = props.history.location.state;
+    console.log("Previous: ", previous);
+    let tempCorrect = previous.correct;
+    let tempWrong = previous.wrong;
 
     if (one.c === "contained") {
       tempCorrect = tempCorrect + 1;
@@ -209,7 +211,7 @@ export default function Test52(props) {
         userId: `${id.id}`,
         testName: "Letter Sets",
         accuracy: `${result < 0 ? 0 : result}`,
-        minutes: 3 - minutes,
+        minutes: 3 - (minutes - previous.minutes),
         seconds: 59 - seconds,
         wrong: tempWrong,
         correct: `${
@@ -1123,7 +1125,8 @@ export default function Test52(props) {
               %
             </Typography>
             <Typography>
-              Time Taken: {3 - minutes} minutes and {59 - seconds} seconds{" "}
+              Time Taken: {3 - (minutes + props.history.location.state.minutes)}{" "}
+              minutes and {59 - seconds} seconds{" "}
             </Typography>
             <Typography id="transition-modal-description">
               Your Score is: {correct - wrong / 2 < 0 ? 0 : correct - wrong / 2}

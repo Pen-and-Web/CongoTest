@@ -237,7 +237,7 @@ export default function Results() {
                             {d.attempt}
                           </StyledTableCell>
                           <StyledTableCell align="right">
-                            {d.accuracy}
+                            {d.accuracy}%
                           </StyledTableCell>
                           <StyledTableCell align="right">
                             {d.minutes} min {d.seconds} sec
