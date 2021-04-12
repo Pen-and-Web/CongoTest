@@ -205,7 +205,7 @@ export default function Test52(props) {
     setWrong(tempWrong);
 
     await axios
-      .post("http://localhost:3100/api/tests/postResult", {
+      .post("https://surveyapp786.herokuapp.com/api/tests/postResult", {
         userId: `${id.id}`,
         testName: "Letter Sets",
         accuracy: `${result < 0 ? 0 : result}`,

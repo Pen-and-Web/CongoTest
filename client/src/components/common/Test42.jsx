@@ -233,7 +233,7 @@ export default function Test42(props) {
     setWrong(wrong);
 
     await axios
-      .post("http://localhost:3100/api/tests/postResult", {
+      .post("https://surveyapp786.herokuapp.com/api/tests/postResult", {
         userId: `${id.id}`,
         testName: "Number Comparison",
         accuracy: `${result < 0 ? 0 : result}`,
