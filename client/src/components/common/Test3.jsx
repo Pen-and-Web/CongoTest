@@ -79,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Test3(props) {
   const [seconds, setSeconds] = useState(59);
-  const [minutes, setMinutes] = useState(2);
+  const [minutes, setMinutes] = useState(3);
   const [timerBg, setTimerBg] = useState("#3f51b5");
   const [segment1, setSegment1] = useState(false);
   const [segment2, setSegment2] = useState(false);
